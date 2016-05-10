@@ -18,4 +18,12 @@ class Login extends Controller
     {
         return $this->fetch();
     }
+
+    /**
+     * 退出登录
+     */
+    public function logOut()
+    {
+
+    }
 }

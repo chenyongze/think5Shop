@@ -19,6 +19,7 @@ class Desktop extends Controller
             $this->redirect('Login/index');
         }
         parent::__construct();
+        $this->view->engine->layout('layout/desktop/index');
     }
 
     private function _verify()

@@ -6,12 +6,6 @@ use think\Db;
 
 class Index extends Desktop
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->view->engine->layout('layout/desktop/index');
-    }
-
     public function index()
     {
        return $this->fetch();

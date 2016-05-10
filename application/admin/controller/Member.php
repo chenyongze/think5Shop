@@ -6,10 +6,59 @@
  * Time: 21:05
  */
 
-namespace application\admin\controller;
+namespace app\admin\controller;
 
+use think\verify\Desktop;
 
-class Member
+class Member extends Desktop
 {
 
+    /**
+     * 会员列表
+     */
+    public function index()
+    {
+
+    }
+
+    /**
+     * 会员详情
+     */
+    public function details()
+    {
+
+    }
+
+    /**
+     * 会员冻结
+     */
+    public function freeze()
+    {
+
+    }
+
+    /**
+     * 会员编辑
+     */
+    public function edit()
+    {
+
+    }
+
+    /**
+     * 会员添加
+     */
+    public function add()
+    {
+
+    }
+
+    /**
+     * 未找到action
+     */
+    public function _empty()
+    {
+        //todo
+        $this->index();
+    }
 }

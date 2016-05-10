@@ -2,18 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: lenovo
- * Date: 2016/5/9
- * Time: 21:08
+ * Date: 2016/5/10
+ * Time: 23:28
+ * Descriptions 商家管理
  */
 
 namespace app\admin\controller;
 
 use think\verify\Desktop;
 
-class Order extends Desktop
+class seller extends Desktop
 {
     /**
-     * 订单列表
+     * 商家列表
      */
     public function index()
     {
@@ -21,7 +22,7 @@ class Order extends Desktop
     }
 
     /**
-     * 订单详情
+     * 商家详情
      */
     public function details()
     {
@@ -29,7 +30,7 @@ class Order extends Desktop
     }
 
     /**
-     * 订单冻结
+     * 商家冻结
      */
     public function freeze()
     {
@@ -37,15 +38,7 @@ class Order extends Desktop
     }
 
     /**
-     * 订单发货
-     */
-    public function send()
-    {
-
-    }
-
-    /**
-     * 订单编辑
+     * 商家编辑
      */
     public function edit()
     {
@@ -53,9 +46,17 @@ class Order extends Desktop
     }
 
     /**
-     * 商品完成
+     * 商家审核
      */
-    public function complete()
+    public function checked()
+    {
+
+    }
+
+    /**
+     * 商家添加
+     */
+    public function add()
     {
 
     }
