@@ -68,5 +68,6 @@ return [
         'think\template\driver\File'           => CORE_PATH . 'template' . DS . 'driver' . DS . 'File' . EXT,
         'think\log\driver\File'                => CORE_PATH . 'log' . DS . 'driver' . DS . 'File' . EXT,
         'think\cache\driver\File'              => CORE_PATH . 'cache' . DS . 'driver' . DS . 'File' . EXT,
+        'think\verify\Desktop'                 => CORE_PATH . 'verify' . DS . 'Desktop' . EXT,
     ],
 ];

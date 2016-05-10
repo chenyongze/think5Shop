@@ -9,7 +9,7 @@
 namespace app\index\logic;
 use \think\Model;
 
-class Passport extends \extend\User\Passport
+class Passport extends Model
 {
 
     public function test()

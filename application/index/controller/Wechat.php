@@ -8,6 +8,6 @@ class Wechat
     public function index()
     {
         import('api.wechat');
-        $this->wechat = new \vendor\api\wechat();
+        $this->wechat = new \extend\api\wechat();
     }
 }

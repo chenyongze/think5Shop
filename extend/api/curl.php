@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\api;
+namespace extend\api;
 
 
 class curl

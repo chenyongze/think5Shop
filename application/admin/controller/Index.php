@@ -1,11 +1,17 @@
 <?php
-namespace app\admin\controller;
+namespace app\admin\Controller;
 
-use think\Controller;
+use think\verify\Desktop;
 use think\Db;
 
-class Index extends controller
+class Index extends Desktop
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->view->engine->layout('layout/desktop/index');
+    }
+
     public function index()
     {
        return $this->fetch();
@@ -13,7 +19,7 @@ class Index extends controller
 
     public function testTmp()
     {
-        $this->view->engine->layout('layout');
+        //$this->view->engine->layout('layout');
         return $this->fetch();
     }
 

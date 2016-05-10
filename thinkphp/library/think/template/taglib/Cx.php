@@ -504,6 +504,7 @@ class Cx extends Taglib
             $endStr = '<?php endif; ?>';
         }
         if ($isFile) {
+
             // 文件方式导入
             $array = explode(',', $file);
             foreach ($array as $val) {
@@ -512,13 +513,13 @@ class Cx extends Taglib
                 }
                 switch ($type) {
                     case 'js':
-                        $parseStr .= '<script type="text/javascript" src="' . $val . '"></script>';
+                        $parseStr .= '<script type="text/javascript" src="' . __PUBLIC__  . '/' . $val . '"></script>';
                         break;
                     case 'css':
-                        $parseStr .= '<link rel="stylesheet" type="text/css" href="' . $val . '" />';
+                        $parseStr .= '<link rel="stylesheet" type="text/css" href="' . __PUBLIC__ . '/' . $val . '" />';
                         break;
                     case 'php':
-                        $parseStr .= '<?php require_cache("' . $val . '"); ?>';
+                        $parseStr .= '<?php require_cache("' . __PUBLIC__ . '/' . $val . '"); ?>';
                         break;
                 }
             }

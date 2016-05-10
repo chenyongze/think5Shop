@@ -19,6 +19,8 @@ defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 defined('THINK_PATH') or define('THINK_PATH', dirname(__FILE__) . DS);
 defined('APP_PATH') or define('APP_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DS);
 defined('ROOT_PATH') or define('ROOT_PATH', dirname(APP_PATH) . DS);
+defined('__PUBLIC__') or define('__PUBLIC__', str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME'])));
+defined('REDIRECT') or define('REDIRECT', __PUBLIC__ . DS . 'index.php');
 defined('LIB_PATH') or define('LIB_PATH', THINK_PATH . 'library' . DS);
 defined('EXTEND_PATH') or define('EXTEND_PATH', ROOT_PATH . 'extend' . DS);
 defined('MODE_PATH') or define('MODE_PATH', THINK_PATH . 'mode' . DS); // 系统应用模式目录
