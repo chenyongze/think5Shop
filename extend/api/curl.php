@@ -6,6 +6,7 @@ namespace extend\api;
 class curl
 {
     private $header = [
+        
         'Pragma' => "no-cache",
         'Cache-Control' => "no-cache",
         'Connection' => "close"

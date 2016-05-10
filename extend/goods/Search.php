@@ -11,4 +11,6 @@ namespace extend\goods\Search;
 class Search
 {
 
+
+    
 }
