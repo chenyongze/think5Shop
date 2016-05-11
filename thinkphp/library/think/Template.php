@@ -876,6 +876,7 @@ class Template
         if (false == strpos($varStr, '|')) {
             return;
         }
+        var_dump($varStr);
         static $_varFunctionList = [];
         $_key                    = md5($varStr);
         //如果已经解析过该变量字串，则直接返回变量值
@@ -889,7 +890,9 @@ class Template
             $length = count($varArray);
             // 取得模板禁止使用函数列表
             $template_deny_funs = explode(',', $this->config['tpl_deny_func_list']);
+
             for ($i = 0; $i < $length; $i++) {
+
                 $args = explode('=', $varArray[$i], 2);
                 // 模板函数过滤
                 $fun = trim($args[0]);
@@ -920,6 +923,7 @@ class Template
             }
             $_varFunctionList[$_key] = $name;
             $varStr                  = $name;
+            
         }
         return;
     }

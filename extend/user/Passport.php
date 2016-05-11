@@ -6,7 +6,7 @@
  * Time: 21:40
  */
 
-namespace extend\User;
+namespace extend\user;
 
 
 class Passport

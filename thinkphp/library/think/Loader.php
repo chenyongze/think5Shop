@@ -227,7 +227,6 @@ class Loader
         if (isset($_file[$class . $baseUrl])) {
             return true;
         }
-
         if (empty($baseUrl)) {
             list($name, $class) = explode(DS, $class, 2);
             if (isset(self::$namespace[$name])) {
@@ -237,7 +236,7 @@ class Loader
                 //加载当前模块应用类库
                 $baseUrl = MODULE_PATH;
             } elseif (is_dir(EXTEND_PATH . $name)) {
-                $baseUrl = EXTEND_PATH;
+                $baseUrl = EXTEND_PATH . $name . DS;
             } else {
                 // 加载其它模块的类库
                 $baseUrl = VENDOR_PATH . $name . DS;

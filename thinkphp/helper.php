@@ -136,6 +136,7 @@ function input($key, $default = null, $filter = null, $merge = false)
  */
 function widget($name, $data = [])
 {
+    var_dump('到这里来了');
     return Loader::action($name, $data, 'widget');
 }
 
@@ -358,3 +359,4 @@ function route($rule = '', $route = [], $type = '*', $option = [], $pattern = []
 {
     Route::register($rule, $route, $type, $option, $pattern);
 }
+

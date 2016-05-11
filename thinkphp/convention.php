@@ -8,7 +8,9 @@ return [
     // 应用模式状态
     'app_status'             => '',
     // 注册的根命名空间
-    'root_namespace'         => [],
+    'root_namespace'         => [
+        'think\verify\Desktop' => CORE_PATH . 'verify' . DS . 'Desktop' . EXT
+    ],
     // 扩展配置文件
     'extra_config_list'      => ['database', 'route', 'validate'],
     // 扩展函数文件
