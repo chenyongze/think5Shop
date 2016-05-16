@@ -18,7 +18,7 @@ class Member extends Desktop
      */
     public function index()
     {
-
+        return $this->fetch();
     }
 
     /**

@@ -6,10 +6,16 @@
  * Time: 21:05
  */
 
-namespace application\index\controller;
+namespace app\index\controller;
 
-
-class Member
+use think\Controller;
+class Member extends Controller
 {
-
+    /**
+     * 会员中心首页
+     */
+    public function index()
+    {
+        return $this->fetch();
+    }
 }

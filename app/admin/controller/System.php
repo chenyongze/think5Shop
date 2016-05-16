@@ -12,6 +12,11 @@ use think\verify\Desktop;
 
 class System extends Desktop
 {
+
+    public function index()
+    {
+
+    }
     /**
      * 计划任务
      */

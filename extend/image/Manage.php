@@ -12,5 +12,11 @@ namespace extend\image;
 
 class Manage
 {
+    /**
+     * 图片上传
+     */
+    public function upload()
+    {
 
+    }
 }

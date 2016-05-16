@@ -9,17 +9,21 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Db;
 
 class Passport extends Controller
 {
     public $userObj;
-    public $userPassport;
+    public $logicPassport;
 
     public function __construct()
     {
         parent::__construct();
-        import('user.Passport');
-        $this->userPassport = new \extend\user\Passport();
+        import('Passport', 'logic');
+        import('user.Object');
+        $this->logicPassport = new \app\index\logic\Passport();
+        $this->userObj = new \extend\user\Object();
+
     }
 
     /**
@@ -27,7 +31,7 @@ class Passport extends Controller
      */
     public function login()
     {
-
+        $jg = Db::table('members')->select();
         return $this->fetch('login');
     }
 
@@ -37,6 +41,26 @@ class Passport extends Controller
     public function register()
     {
         return $this->fetch();
+    }
+
+    /**
+     * 用户注册提交
+     */
+    public function saveMember()
+    {
+        //输入过滤 todo
+        $params = $_POST;
+        unset($_POST);
+        $msg = $this->logicPassport->checkData($params);
+        if($msg)
+        {
+            return ['error' => $msg];
+        }
+        if($this->logicPassport->saveMember($params))
+        {
+            return ['success' => '注册成功', 'redirect' => 'url'];
+        }
+        return ['error' => '注册失败'];
     }
 
     /**
@@ -60,7 +84,7 @@ class Passport extends Controller
      */
     public function checkName()
     {
-
+        return ['error' => '失败', 'redirect' => 'url'];
     }
 
     /**

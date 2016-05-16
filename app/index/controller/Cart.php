@@ -6,10 +6,14 @@
  * Time: 21:07
  */
 
-namespace application\index\controller;
+namespace app\index\controller;
 
+use think\Controller;
 
-class Cart
+class Cart extends Controller
 {
-
+    public function index()
+    {
+        return $this->fetch();
+    }
 }

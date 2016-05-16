@@ -17,7 +17,7 @@ class Order extends Desktop
      */
     public function index()
     {
-
+        return $this->fetch();
     }
 
     /**
