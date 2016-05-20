@@ -276,7 +276,6 @@ class Loader
             $module = APP_MULTI_MODULE ? MODULE_NAME : '';
         }
         $class = self::parseClass($module, $layer, $name);
-        print_r($class);
         if (class_exists($class)) {
             $model = new $class();
         } else {

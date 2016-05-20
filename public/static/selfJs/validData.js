@@ -16,7 +16,6 @@ var ajaxValid = function ($option) {
     var data = {value: $option.val()};
     var result = {};
     $.post(url, data, function (re) {
-        console.log(re);
         if (re.error) {
             result = {result: 'error'}
         } else if (re.success) {
@@ -59,8 +58,20 @@ var required = function ($option) {
     return false;
 };
 
+var submit = function ($form) {
+    console.log($form.serializeArray());
+    $form.find('button').click(function () {
+       alert('');
+    });
+    // $form.on('submit', function(){
+    //     $form.stopPropagation();
+    //     alert('');
+    // });
+};
+
 (function (e) {
-    var $options = $('[validData="true"]').find('input, select, textarea');
+    var $from = $('[validData="true"]');
+    var $options = $from.find('input, select, textarea, button');
     $.each($options, function (idx, item) {
         $(item).change(function () {
             preg($(this));
@@ -68,4 +79,5 @@ var required = function ($option) {
             ajaxValid($(this));
         });
     });
+    submit($from);
 })();

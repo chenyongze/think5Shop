@@ -1,9 +1,10 @@
 <{layout name="layout"}>
+
 <div id="mainBody">
     <div class="container">
         <div class="row">
             <!-- Sidebar ================================================== -->
-            <{include file="public/left-menu"}>
+            <{:widget('Menu/index', 'register')}>
             <!-- Sidebar end=============================================== -->
             <div class="span9">
                 <ul class="breadcrumb">
@@ -36,13 +37,13 @@
                         <div class="control-group">
                             <label class="control-label" for="inputPassword1">密码<sup>*</sup></label>
                             <div class="controls">
-                                <input type="text" name="members[passport1]" id="inputPassword1" placeholder="请输入密码">
+                                <input type="text" name="members[passport]" id="inputPassword1" placeholder="请输入密码">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="inputPassword2">确认密码<sup>*</sup></label>
                             <div class="controls">
-                                <input type="password" name="members[passport2]"  id="inputPassword2" placeholder="请再次输入密码">
+                                <input type="password" name="members[repassport]"  id="inputPassword2" placeholder="请再次输入密码">
                             </div>
                         </div>
                         <div class="control-group">
@@ -165,7 +166,7 @@
                         <div class="control-group">
                             <div class="controls">
 
-                                <input class="btn btn-large btn-success" type="submit" value="提交" />
+                                <button class="btn btn-large btn-success" type="button" >提交</button>
                             </div>
                         </div>
                     </form>

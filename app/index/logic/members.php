@@ -8,12 +8,13 @@
 
 namespace app\index\logic;
 
+use think\Loader;
 use \think\Model;
 
-class Passport extends Model
+class Members extends Model
 {
 
-    public $registerType = 'members';
+    public $userType = 'members';
 
     /**
      * 检查登录
@@ -30,30 +31,30 @@ class Passport extends Model
      */
     public function checkData(&$data)
     {
-        $localType = $this->getLocalType($data[$this->registerType]['local']);
-        foreach ($data[$this->registerType] as &$value) {
+        $localType = $this->getLocalType($data[$this->userType]['local']);
+        foreach ($data[$this->userType] as &$value) {
             $value = trim($value);
         }
 
-        if ($data[$this->registerType]['local'] > 20) {
+        if ($data[$this->userType]['local'] > 20) {
             return '用户名过长';
         }
 
-        if ($data[$this->registerType]['local'] < 5) {
+        if ($data[$this->userType]['local'] < 5) {
             return '登录账号最少6个字符';
         }
 
-        if (preg_match('/^[^\x00-\x2d^\x2f^\x3a-\x3f]+$/i', trim($data[$this->registerType]['local']))) {
+        if (preg_match('/^[^\x00-\x2d^\x2f^\x3a-\x3f]+$/i', trim($data[$this->userType]['local']))) {
             return '该登录账号包含非法字符';
         }
 
         if ($localType == 'email' &&
-            !preg_match('/^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i', $data[$this->registerType]['local'])
+            !preg_match('/^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i', $data[$this->userType]['local'])
         ) {
             return '邮件格式不正确';
         }
 
-        if ($data[$this->registerType]['passport1'] != $data[$this->registerType]['passport2']) {
+        if ($data[$this->userType]['passport1'] != $data[$this->userType]['passport2']) {
             return '确认密码输入不正确';
         }
     }
@@ -64,10 +65,10 @@ class Passport extends Model
      */
     public function formatData(&$data)
     {
-        $localType = $this->getLocalType($data[$this->registerType]['local']);
-        $data[$this->registerType][$localType] = $data[$this->registerType]['local'];
-        unset($data[$this->registerType]['local']);
-        unset($data[$this->registerType]['passport1']);
+        $localType = $this->getLocalType($data[$this->userType]['local']);
+        $data[$this->userType][$localType] = $data[$this->userType]['local'];
+        if($localType != 'local') unset($data[$this->userType]['local']);
+        unset($data[$this->userType]['passport1']);
     }
 
     /**
@@ -104,8 +105,18 @@ class Passport extends Model
      */
     public function saveMember(&$data)
     {
+        $validate = Loader::validate('Members');
+        $localType = 're' . $this->getLocalType($data[$this->userType]['local']);
+        if(!$validate->scene($localType)->check($data[$this->userType]))
+        {
+            return $validate->getError();
+        }
         $this->formatData($data);
-        Db::table('members');
+        $uid = Loader::model('Members')->save($data[$this->userType]);
+        if(!$uid)
+        {
+            return '注册失败，请联系管理员';
+        }
         return true;
     }
 
