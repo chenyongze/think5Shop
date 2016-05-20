@@ -359,3 +359,24 @@ function route($rule = '', $route = [], $type = '*', $option = [], $pattern = []
     Route::register($rule, $route, $type, $option, $pattern);
 }
 
+/**
+ * 获取ip
+ * @return mixed
+ */
+function getRemoteAddr()
+{
+    if (!isset($GLOBALS['_REMOTE_ADDR_'])) {
+        $addrs = array();
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            foreach (array_reverse(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])) as $x_f) {
+                $x_f = trim($x_f);
+                if (preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $x_f)) {
+                    $addrs[] = $x_f;
+                }
+            }
+        }
+        $GLOBALS['_REMOTE_ADDR_'] = isset($addrs[0]) ? $addrs[0] : $_SERVER['REMOTE_ADDR'];
+    }
+    return $GLOBALS['_REMOTE_ADDR_'];
+}
+

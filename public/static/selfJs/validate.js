@@ -8,6 +8,9 @@
  * @param $option
  * @returns {{}}
  */
+
+
+
 var ajaxValid = function ($option) {
     if (!$option.attr('remote')) {
         return false;
@@ -59,18 +62,33 @@ var required = function ($option) {
 };
 
 var submit = function ($form) {
-    console.log($form.serializeArray());
-    $form.find('button').click(function () {
-       alert('');
+    $form.on('submit', function (e) {
+        e.stopPropagation();
+        $.post($form.attr('action'), $form.serializeArray(), function (re) {
+            if (re.code === 1) {
+                location = re.url;
+            }else if(re.code === 0){
+                var error = '<div class="control-group">' +
+                                '<div class="controls">' +
+                                    '<div class="alert alert-danger" style="width:170px;">' + re.data + '</div>' +
+                                '</div>' +
+                            '</div>';
+                $form.append(error);
+                alert_time = setTimeout(function () {
+                    clearTimeout(alert_time);
+                    $form.find('.alert-danger').fadeOut('fast', function () {
+                       this.remove();
+                    });
+                }, 3000);
+            }
+
+        }, 'json');
+        return false;
     });
-    // $form.on('submit', function(){
-    //     $form.stopPropagation();
-    //     alert('');
-    // });
 };
 
 (function (e) {
-    var $from = $('[validData="true"]');
+    var $from = $('[validate="true"]');
     var $options = $from.find('input, select, textarea, button');
     $.each($options, function (idx, item) {
         $(item).change(function () {

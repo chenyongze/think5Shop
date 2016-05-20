@@ -9,7 +9,9 @@
 namespace app\index\logic;
 
 use think\Loader;
-use \think\Model;
+use think\Model;
+use think\Session;
+use think\Db;
 
 class Members extends Model
 {
@@ -21,42 +23,15 @@ class Members extends Model
      */
     public function checkLogin()
     {
+        $userData = $this->getUserData();
+        $authSign = [
+            $this->userType . 'Id' => $userData['member_id'],
+            'local' => $userData['name']
+        ];
+        if (!Session::get('authSign') == $this->_dataAuthSign($authSign)) {
+            return false;
+        }
         return true;
-    }
-
-    /**
-     * 检查用户数据
-     * @param $data
-     * @return string
-     */
-    public function checkData(&$data)
-    {
-        $localType = $this->getLocalType($data[$this->userType]['local']);
-        foreach ($data[$this->userType] as &$value) {
-            $value = trim($value);
-        }
-
-        if ($data[$this->userType]['local'] > 20) {
-            return '用户名过长';
-        }
-
-        if ($data[$this->userType]['local'] < 5) {
-            return '登录账号最少6个字符';
-        }
-
-        if (preg_match('/^[^\x00-\x2d^\x2f^\x3a-\x3f]+$/i', trim($data[$this->userType]['local']))) {
-            return '该登录账号包含非法字符';
-        }
-
-        if ($localType == 'email' &&
-            !preg_match('/^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i', $data[$this->userType]['local'])
-        ) {
-            return '邮件格式不正确';
-        }
-
-        if ($data[$this->userType]['passport1'] != $data[$this->userType]['passport2']) {
-            return '确认密码输入不正确';
-        }
     }
 
     /**
@@ -67,8 +42,8 @@ class Members extends Model
     {
         $localType = $this->getLocalType($data[$this->userType]['local']);
         $data[$this->userType][$localType] = $data[$this->userType]['local'];
-        if($localType != 'local') unset($data[$this->userType]['local']);
-        unset($data[$this->userType]['passport1']);
+        if ($localType != 'local') unset($data[$this->userType]['local']);
+        unset($data[$this->userType]['repassport']);
     }
 
     /**
@@ -107,37 +82,71 @@ class Members extends Model
     {
         $validate = Loader::validate('Members');
         $localType = 're' . $this->getLocalType($data[$this->userType]['local']);
-        if(!$validate->scene($localType)->check($data[$this->userType]))
-        {
+        $userData['local'] = $data[$this->userType]['local'];
+        if (!$validate->scene($localType)->check($data[$this->userType])) {
             return $validate->getError();
         }
         $this->formatData($data);
         $uid = Loader::model('Members')->save($data[$this->userType]);
-        if(!$uid)
-        {
+        if (!$uid) {
             return '注册失败，请联系管理员';
         }
+        $userData['userId'] = $uid;
+        $this->setSession($userData);
         return true;
     }
 
     /**
-     * 获取注册ip
-     * @return mixed
+     * 获取用户id
+     * @return int
      */
-    public function getRemoteAddr()
+    public function getUserId()
     {
-        if (!isset($GLOBALS['_REMOTE_ADDR_'])) {
-            $addrs = array();
-            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                foreach (array_reverse(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])) as $x_f) {
-                    $x_f = trim($x_f);
-                    if (preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $x_f)) {
-                        $addrs[] = $x_f;
-                    }
-                }
-            }
-            $GLOBALS['_REMOTE_ADDR_'] = isset($addrs[0]) ? $addrs[0] : $_SERVER['REMOTE_ADDR'];
-        }
-        return $GLOBALS['_REMOTE_ADDR_'];
+        return Session::get($this->userType . 'Id');
     }
+
+    /**
+     * 获取用户数据
+     * @return int
+     */
+    public function getUserData($uid = null)
+    {
+        !is_numeric($uid) && $uid = $this->getUserId();
+        if (!$uid) return [];
+        $userData = Db::table('Members')->field('member_id, name')->where('member_id', 1)->find();
+        return $userData;
+    }
+
+    /**
+     * 设置session
+     * @param $userData
+     */
+    public function setSession($userData)
+    {
+        Session::set($this->userType . 'Id', $userData['userId']);
+        Session::set($this->userType . 'Name', $userData['local']);
+        Session::set('authSign', $this->_dataAuthSign($userData));
+    }
+
+    /**
+     * 加密生成签名证
+     * @param $data
+     * $return string
+     */
+    private function _dataAuthSign(Array $data)
+    {
+        ksort($data);
+        return sha1(http_build_query($data));
+    }
+
+    /**
+     * 设置cookie
+     * @param $userData
+     */
+    public function setCookie($userData)
+    {
+
+    }
+
+
 }

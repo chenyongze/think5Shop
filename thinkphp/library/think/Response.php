@@ -70,7 +70,7 @@ class Response
             return $data;
         }
 
-        echo is_array($data) ? json_encode($data) : $data; //json 数组转换暂时处理 原框架没处理 2016/5/20
+        echo $data;
         self::isExit() && exit();
     }
 

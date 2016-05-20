@@ -26,12 +26,15 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
                      </div> -->
-                    <form class="form-horizontal" validData="true" method="post" action="<{$Think.const.__PUBLIC__}>/index.php/index/passport/saveMember">
+                    <form class="form-horizontal" validate="true" method="post"
+                          action="<{$Think.const.__PUBLIC__}>/index.php/index/passport/saveMember">
                         <h4>帐号信息</h4>
                         <div class="control-group">
                             <label class="control-label" for="local">帐号<sup>*</sup></label>
                             <div class="controls">
-                                <input type="text" name="members[local]" remote="<{$Think.const.__PUBLIC__}>/index.php/index/passport/checkName" required="true"  id="local" placeholder="请输入用户名/手机/邮箱">
+                                <input type="text" name="members[local]"
+                                       remote="<{$Think.const.__PUBLIC__}>/index.php/index/passport/checkName"
+                                       required="true" id="local" placeholder="请输入用户名/手机/邮箱">
                             </div>
                         </div>
                         <div class="control-group">
@@ -43,17 +46,18 @@
                         <div class="control-group">
                             <label class="control-label" for="inputPassword2">确认密码<sup>*</sup></label>
                             <div class="controls">
-                                <input type="password" name="members[repassport]"  id="inputPassword2" placeholder="请再次输入密码">
+                                <input type="password" name="members[repassport]" id="inputPassword2"
+                                       placeholder="请再次输入密码">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="vcode">验证码<sup>*</sup></label>
                             <div class="controls">
-                                <input type="password" name="vcode" id="vcode" placeholder="请输入验证码">
+                                <input type="password" name="vcode" id="vcode" style="width:150px;" placeholder="请输入验证码">
                                 <img src="adsfdsa"/>
                             </div>
-
                         </div>
+
                         <!--
                         <div class="control-group">
                             <label class="control-label">Date of Birth <sup>*</sup></label>
@@ -72,10 +76,11 @@
                             </div>
                         </div>-->
 
-                        <div class="alert alert-block alert-error fade in">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-                        </div>
+                        <!--<div class="alert alert-block alert-error fade in">-->
+                            <!--<button type="button" class="close" data-dismiss="alert">×</button>-->
+                            <!--<strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry.-->
+                            <!--Lorem Ipsum has been the industry's standard dummy text ever since the 1500s-->
+                        <!--</div>-->
 
                         <!--<h4>Your address</h4>
                         <div class="control-group">
@@ -165,10 +170,10 @@
 
                         <div class="control-group">
                             <div class="controls">
-
-                                <button class="btn btn-large btn-success" type="button" >提交</button>
+                                <button class="btn btn-large btn-success" type="submit">提交</button>
                             </div>
                         </div>
+
                     </form>
                 </div>
 

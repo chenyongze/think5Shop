@@ -13,10 +13,10 @@ use \think\Validate;
 class Members extends Validate
 {
     protected $rule = [
-        'local'      => 'require|between:6,20',
-        'email'      => 'require|email|between:6,20',
+        'local'      => 'require|length:6,20',
+        'email'      => 'require|email|length:6,20',
         'mobile'     => 'require|regex:/^1[34578]{1}[0-9]{9}$/',
-        'passport'   => 'require|between:6,20',
+        'passport'   => 'require|length:6,20',
         'repassport' => 'require|confirm:passport',
         'accept'     => 'accepted',
     ];//验证规则

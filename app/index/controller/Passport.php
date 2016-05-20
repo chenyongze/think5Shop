@@ -8,7 +8,6 @@
 
 namespace app\index\controller;
 
-use app\index\model\Members;
 use think\Controller;
 use think\Db;
 use think\Loader;
@@ -22,9 +21,8 @@ class Passport extends Controller
     {
         parent::__construct();
         import('user.Object');
-        $this->logicMembers = Loader::model('members', 'logic');
+        $this->logicMembers = Loader::model('Members', 'logic');
         $this->userObj = new \extend\user\Object();
-
     }
 
     /**
@@ -32,8 +30,22 @@ class Passport extends Controller
      */
     public function login()
     {
-        $jg = Db::table('members')->select();
+        if ($this->logicMembers->checkLogin()) {
+            $this->redirect('index/index');
+        }
         return $this->fetch('login');
+    }
+
+    /**
+     * 检查登录状态
+     */
+    public function checkLogin()
+    {
+        if ($this->logicMembers->checkLogin()) {
+            $this->redirect('index/index');
+        } else {
+            $this->redirect('Passport/login');
+        }
     }
 
     /**
@@ -41,6 +53,9 @@ class Passport extends Controller
      */
     public function register()
     {
+        if ($this->logicMembers->checkLogin()) {
+            $this->redirect('index/index');
+        }
         return $this->fetch();
     }
 
@@ -54,12 +69,11 @@ class Passport extends Controller
         $params = $_POST;
         unset($_POST);
         $result = $this->logicMembers->saveMember($params);
-
-        if($result === true)
-        {
-            return ['success' => '注册成功', 'redirect' => 'url'];
+        \think\Response::type('json');
+        if ($result === true) {
+            return $this->success('新增成功', 'reset');
         }
-        return ['error' => $result];
+        return $this->error('注册失败', '', $result);
     }
 
     /**
