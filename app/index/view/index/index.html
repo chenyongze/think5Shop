@@ -1,4 +1,4 @@
-<{layout name="layout"}>
+<{layout name="layout/layout"}>
 <div id="carouselBlk">
     <{include file="public/slide"}>
 </div>
@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <!-- Sidebar ================================================== -->
-            <{include file="public/left-menu"}>
+            <{:widget('Menu/index', 'register')}>
             <!-- Sidebar end=============================================== -->
             <div class="span9">
                 <div class="well well-small">

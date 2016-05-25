@@ -64,10 +64,12 @@ var required = function ($option) {
 var submit = function ($form) {
     $form.on('submit', function (e) {
         e.stopPropagation();
-        $.post($form.attr('action'), $form.serializeArray(), function (re) {
+        e.preventDefault();
+        jQuery.post($form.attr('action'), $form.serializeArray(), function (re) {
             if (re.code === 1) {
                 location = re.url;
             }else if(re.code === 0){
+
                 var error = '<div class="control-group">' +
                                 '<div class="controls">' +
                                     '<div class="alert alert-danger" style="width:170px;">' + re.data + '</div>' +
@@ -81,13 +83,13 @@ var submit = function ($form) {
                     });
                 }, 3000);
             }
-
+            return false;
         }, 'json');
         return false;
     });
 };
 
-(function (e) {
+(function ($) {
     var $from = $('[validate="true"]');
     var $options = $from.find('input, select, textarea, button');
     $.each($options, function (idx, item) {
@@ -98,4 +100,4 @@ var submit = function ($form) {
         });
     });
     submit($from);
-})();
+})(jQuery);

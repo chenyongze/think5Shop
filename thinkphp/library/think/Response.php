@@ -157,7 +157,7 @@ class Response
      * @param integer $wait 跳转等待时间
      * @return mixed
      */
-    public static function success($msg = '', $data = '', $url = null, $wait = 3)
+    public static function success($msg = '', $data = '', $url = null, $wait = 3, $type)
     {
         $code = 1;
         if (is_numeric($msg)) {
@@ -171,6 +171,9 @@ class Response
             'url'  => is_null($url) && isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : $url,
             'wait' => $wait,
         ];
+        if($type){
+            $result['url'] = preg_match('/^(https?:|\/)/', $url) ? $url : Url::build($url, $data);
+        }
 
         $type = IS_AJAX ? Config::get('default_ajax_return') : Config::get('default_return_type');
 
@@ -190,7 +193,7 @@ class Response
      * @param integer $wait 跳转等待时间
      * @return mixed
      */
-    public static function error($msg = '', $data = '', $url = null, $wait = 3)
+    public static function error($msg = '', $data = '', $url = null, $wait = 3, $type)
     {
         $code = 0;
         if (is_numeric($msg)) {
@@ -204,6 +207,10 @@ class Response
             'url'  => is_null($url) ? 'javascript:history.back(-1);' : $url,
             'wait' => $wait,
         ];
+
+        if($type){
+            $result['url'] = preg_match('/^(https?:|\/)/', $url) ? $url : Url::build($url, $data);
+        }
 
         $type = IS_AJAX ? Config::get('default_ajax_return') : Config::get('default_return_type');
 

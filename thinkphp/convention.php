@@ -9,7 +9,8 @@ return [
     'app_status'             => '',
     // 注册的根命名空间
     'root_namespace'         => [
-        'think\verify\Desktop' => CORE_PATH . 'verify' . DS . 'Desktop' . EXT
+        'think\verify\Desktop' => CORE_PATH . 'verify' . DS . 'Desktop' . EXT,
+        'think\user\Passport' => CORE_PATH . 'user' . DS . 'Passport' . EXT
     ],
     // 扩展配置文件
     'extra_config_list'      => ['database', 'route', 'validate'],

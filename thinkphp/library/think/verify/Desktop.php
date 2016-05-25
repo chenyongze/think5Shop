@@ -10,20 +10,17 @@
 namespace think\verify;
 
 use think\Controller;
+use think\Loader;
 
 class Desktop extends Controller
 {
+    protected $logicAdmin;
     public function __construct()
     {
-        if (!$jg = $this->_verify()) {
-            $this->redirect('Login/index');
+        $this->logicAdmin = Loader::model('Admin', 'logic');
+        if (!$this->logicAdmin->checkLogin()) {
+            $this->redirect('Passport/index');
         }
         parent::__construct();
-        $this->view->engine->layout('layout/desktop/index');
-    }
-
-    private function _verify()
-    {
-        return true;
     }
 }

@@ -2,11 +2,16 @@
     <div class="container">
         <div id="welcomeLine" class="row">
             <div class="span6">
-                <span>选择地区</span>
-                Welcome!<strong> User</strong>
-                <a href="product_summary.html"><span class="">请登录</span></a>
-            </div>
 
+                <span>选择地区</span>
+                <{if $Think.session.userName}>
+                欢迎您：<strong> <{$Think.session.userName}></strong>
+                <a href="<{$Think.const.__PUBLIC__}>/index.php/index/Passport/logout" data><span class="">注销</span></a>
+                <{else}>
+                <a href="<{$Think.const.__PUBLIC__}>/index.php/index/Passport/login"><span class="">请登录</span></a>
+                <a href="<{$Think.const.__PUBLIC__}>/index.php/index/Passport/register"><span class="">立即注册</span></a>
+                <{/if}>
+            </div>
             <div class="span6">
                 <div class="pull-right">
                     <a href="<{$Think.const.__PUBLIC__}>/index.php/index/member/index"><span class="">会员中心</span></a>

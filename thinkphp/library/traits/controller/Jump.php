@@ -27,9 +27,9 @@ trait Jump
      * @param integer $wait 跳转等待时间
      * @return mixed
      */
-    public function error($msg = '', $url = null, $data = '', $wait = 3)
+    public function error($msg = '', $url = null, $type = false, $data = '', $wait = 3)
     {
-        return Response::error($msg, $data, $url, $wait);
+        return Response::error($msg, $data, $url, $wait, $type);
     }
 
     /**
@@ -41,9 +41,9 @@ trait Jump
      * @param integer $wait 跳转等待时间
      * @return mixed
      */
-    public function success($msg = '', $url = null, $data = '', $wait = 3)
+    public function success($msg = '', $url = null, $type = false, $data = '', $wait = 3)
     {
-        return Response::success($msg, $data, $url, $wait);
+        return Response::success($msg, $data, $url, $wait, $type);
     }
 
     /**

@@ -11,18 +11,19 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\Loader;
+use think\Session;
 
 class Passport extends Controller
 {
-    public $userObj;
-    public $logicMembers;
+    public $userData;
+    public $logicUser;
 
     public function __construct()
     {
         parent::__construct();
-        import('user.Object');
-        $this->logicMembers = Loader::model('Members', 'logic');
-        $this->userObj = new \extend\user\Object();
+        //import('user.Object');
+        $this->logicUser = Loader::model('User', 'logic');
+        //$this->userObj = new \extend\user\Object();
     }
 
     /**
@@ -30,7 +31,7 @@ class Passport extends Controller
      */
     public function login()
     {
-        if ($this->logicMembers->checkLogin()) {
+        if ($this->logicUser->checkLogin()) {
             $this->redirect('index/index');
         }
         return $this->fetch('login');
@@ -41,7 +42,7 @@ class Passport extends Controller
      */
     public function checkLogin()
     {
-        if ($this->logicMembers->checkLogin()) {
+        if ($this->logicUser->checkLogin()) {
             $this->redirect('index/index');
         } else {
             $this->redirect('Passport/login');
@@ -49,11 +50,24 @@ class Passport extends Controller
     }
 
     /**
+     * 用户登录
+     */
+    public function loginPost()
+    {
+        if ($this->logicUser->loginPost($_POST['members'])) {
+            return $this->success('登录成功', 'reset');
+        } else {
+            return $this->error('登录失败', '');
+        }
+
+    }
+
+    /**
      * 用户注册
      */
     public function register()
     {
-        if ($this->logicMembers->checkLogin()) {
+        if ($this->logicUser->checkLogin()) {
             $this->redirect('index/index');
         }
         return $this->fetch();
@@ -67,9 +81,9 @@ class Passport extends Controller
     {
         //输入过滤 todo
         $params = $_POST;
-        unset($_POST);
-        $result = $this->logicMembers->saveMember($params);
-        \think\Response::type('json');
+        //unset($_POST);
+        $result = $this->logicUser->saveMember($params);
+        //\think\Response::type('json');
         if ($result === true) {
             return $this->success('新增成功', 'reset');
         }
@@ -81,7 +95,10 @@ class Passport extends Controller
      */
     public function reset()
     {
-
+        var_dump(Session::get('userId'));
+        var_dump(Session::get('localType'));
+        var_dump(Session::get('userName'));
+        var_dump(Session::get('authSign'));
     }
 
     /**
@@ -97,7 +114,12 @@ class Passport extends Controller
      */
     public function checkName()
     {
-        return ['error' => '失败', 'redirect' => 'url'];
+        \think\Response::type('json');
+        if (!$_POST['value']) return $this->error('非法请求');
+        if (!$this->logicUser->checkLocal($_POST['value'])) {
+            return $this->error('重名');
+        }
+        return $this->success('可用');
     }
 
     /**
@@ -112,6 +134,23 @@ class Passport extends Controller
      * 绑定邮箱
      */
     public function bindEmail()
+    {
+
+    }
+
+    /**
+     * 注销
+     */
+    public function logout()
+    {
+        $this->logicUser->logout();
+        return $this->success('退出成功');
+    }
+
+    /**
+     * 重置密码
+     */
+    public function rePassword()
     {
 
     }

@@ -7,10 +7,11 @@
  */
 
 namespace app\index\model;
+
 use \think\model;
 
 class Members extends Model
 {
     protected $pk = 'member_id';
-    protected $createTime  = ['regtime'];
+    protected $createTime = ['regtime'];
 }

@@ -1,64 +1,51 @@
-<{layout name="layout"}>
+<{layout name="layout/layout"}>
 
 <div id="mainBody">
     <div class="container">
         <div class="row">
             <!-- Sidebar ================================================== -->
-            <{include file="public/left-menu"}>
+            <{:widget('Menu/index', 'register')}>
             <!-- Sidebar end=============================================== -->
             <div class="span9">
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                    <li class="active">Login</li>
+                    <li><a href="index.html">首页</a> <span class="divider">/</span></li>
+                    <li class="active">登录</li>
                 </ul>
-                <h3> Login</h3>
                 <hr class="soft"/>
-
-                <div class="row">
-                    <div class="span4">
-                        <div class="well">
-                            <h5>CREATE YOUR ACCOUNT</h5><br/>
-                            Enter your e-mail address to create an account.<br/><br/><br/>
-                            <form action="register.html">
-                                <div class="control-group">
-                                    <label class="control-label" for="inputEmail0">E-mail address</label>
-                                    <div class="controls">
-                                        <input class="span3"  type="text" id="inputEmail0" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="controls">
-                                    <button type="submit" class="btn block">Create Your Account</button>
-                                </div>
-                            </form>
+                <div class="well">
+                    <form class="form-horizontal" validate="true" method="post"
+                          action="<{$Think.const.__PUBLIC__}>/index.php/index/passport/loginPost">
+                        <h4>用户登录</h4>
+                        <div class="control-group">
+                            <label class="control-label" for="inputEmail1">帐号</label>
+                            <div class="controls">
+                                <input class="span3" type="text" name="members[local]" id="inputEmail1" placeholder="用户名/手机/邮箱">
+                            </div>
                         </div>
-                    </div>
-                    <div class="span1"> &nbsp;</div>
-                    <div class="span4">
-                        <div class="well">
-                            <h5>ALREADY REGISTERED ?</h5>
-                            <form>
-                                <div class="control-group">
-                                    <label class="control-label" for="inputEmail1">Email</label>
-                                    <div class="controls">
-                                        <input class="span3"  type="text" id="inputEmail1" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="inputPassword1">Password</label>
-                                    <div class="controls">
-                                        <input type="password" class="span3"  id="inputPassword1" placeholder="Password">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" class="btn">Sign in</button> <a href="forgetpass.html">Forget password?</a>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="control-group">
+                            <label class="control-label" for="inputPassword1">密码</label>
+                            <div class="controls">
+                                <input type="password" class="span3" name="members[password]" id="inputPassword1"
+                                       placeholder="密码">
+                            </div>
                         </div>
-                    </div>
+                        <div class="control-group">
+                            <label class="control-label" for="vcode">验证码<sup>*</sup></label>
+                            <div class="controls">
+                                <input type="text" name="members[vcode]" id="vcode" style="width:150px;"
+                                       placeholder="请输入验证码">
+                                <img src="adsfdsa"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button class="btn btn-large btn-success" type="submit">提交</button>
+                                <a href="<{$Think.const.__PUBLIC__}>/index.php/index/Passport/rePassword">忘记密码?</a>
+                                <a href="<{$Think.const.__PUBLIC__}>/index.php/index/Passport/register">立即注册</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
             </div>
         </div>
     </div>

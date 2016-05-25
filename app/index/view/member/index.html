@@ -1,9 +1,9 @@
-<{layout name="layout"}>
+<{layout name="layout/layout"}>
 <div id="mainBody">
     <div class="container">
         <div class="row">
             <!-- Sidebar ================================================== -->
-            <{include file="public/left-menu"}> <!-- 替换成挂件 -->
+            <{:widget('Menu/index', 'register')}> <!-- 替换成挂件 -->
             <!-- Sidebar end=============================================== -->
             <div class="span9">
                 <ul class="breadcrumb">
