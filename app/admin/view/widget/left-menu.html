@@ -1,16 +1,21 @@
-<div class="vernav2 iconmenu">
-    <ul>
-        <{foreach $menus as $menu}>
-        <li class="current"><a href="#<{$menu.controller}><{$menu.action}>" class="editor"><{$menu.title}></a>
-            <span class="arrow"></span>
-            <ul id="<{$menu.controller}><{$menu.action}>" class="current">
-                <{foreach $menu.children as $sonMenu}>
-                <li <{if condition="(strtolower($Think.const.CONTROLLER_NAME) eq $sonMenu.controller) and (strtolower($Think.const.ACTION_NAME) eq $sonMenu.action)"}>class="current"<{/if}>>
-                    <a href="<{$Think.const.__PUBLIC__}>/index.php/<{$sonMenu.type}>/<{$sonMenu.controller}>/<{$sonMenu.action}>"><{$sonMenu.title}></a>
-                </li>
-                <{/foreach}>
-            </ul>
-        </li>
-        <{/foreach}>
-    </ul>
-</div><!--leftmenu-->
+<ul class="nav nav-list">
+    <{foreach $menus as $menu}>
+    <li <{if condition="$menu.id eq $active"}>class="active open"<{/if}>>
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-desktop"></i>
+            <span class="menu-text"><{$menu.title}></span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+        <ul class="submenu">
+            <{foreach $menu.children as $sonMenu}>
+            <li <{if condition="(strtolower($Think.const.CONTROLLER_NAME) eq $sonMenu.controller) and (strtolower($Think.const.ACTION_NAME) eq $sonMenu.action)"}>class="active"<{/if}>>
+                <a href="<{$Think.const.__PUBLIC__}>/index.php/<{$sonMenu.type}>/<{$sonMenu.controller}>/<{$sonMenu.action}>">
+                    <i class="icon-double-angle-right"></i>
+                    <{$sonMenu.title}>
+                </a>
+            </li>
+            <{/foreach}>
+        </ul>
+    </li>
+    <{/foreach}>
+</ul><!-- /.nav-list -->

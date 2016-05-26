@@ -42,7 +42,7 @@ class Panel extends Desktop
 
     /**
      * ajax查询子菜单
-     * @param $menuId
+     * @param $menu
      * @return mixed
      */
     public function getChildren($menu)

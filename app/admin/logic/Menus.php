@@ -26,17 +26,19 @@ class Menus extends Model
     /**
      * 获取菜单
      * @param $params
+     * @param $active 后台菜单选中标识
      * @return array
      */
-    public function getMenu($params)
+    public function &getMenu($params, &$active)
     {
         //是超级管理员
         if ($params['super']) {
             $parentsId = Db::table('menus')
-                ->field('group_id')
+                ->field('group_id, parent')
                 ->where(['controller' => CONTROLLER_NAME, 'action' => ACTION_NAME, 'type' => 'admin', 'display' => 'true'])
                 ->find();
             if ($parentsId['group_id'] == 0) return [];
+            $active = $parentsId['parent'];
             return $this->menuAll($parentsId['group_id']);
         } else {
             //不是超级管理员，查询当前用户身份，或取菜单
@@ -49,7 +51,7 @@ class Menus extends Model
      * @param $parentId
      * @return array
      */
-    public function menuAll($parentId = null)
+    public function &menuAll($parentId = null)
     {
         $menus = $this->getChildren($parentId);
         foreach ($menus as $key => &$value) {

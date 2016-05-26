@@ -37,7 +37,9 @@ class Menu extends Desktop
      */
     public function index($params)
     {
-        $this->assign('menus', $this->menus->getMenu($this->adminInfo));
+        $active = 0;
+        $this->assign('menus', $this->menus->getMenu($this->adminInfo, $active));
+        $this->assign('active',$active);
         return $this->fetch('widget/left-menu');
     }
 }

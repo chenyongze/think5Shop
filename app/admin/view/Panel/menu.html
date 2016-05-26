@@ -1,80 +1,90 @@
 <{layout name="layout/desktop/index"}>
-<div class="centercontent tables">
-    <div id="contentwrapper" class="contentwrapper">
-        <div class="contenttitle2">
-            <h3>后台菜单列表</h3>
-        </div><!--contenttitle-->
-        <div class="tableoptions">
-            <button class="deletebutton radius3" title="table2" data-toggle="modal"
-                    data-target=".brand_add_modal" href="<{$Think.const.__PUBLIC__}>/index.php/admin/panel/addGroup">
-                添加</button>
-            &nbsp;
-            <button class="radius3">删除</button>
-            &nbsp;
-            <select class="radius3">
-                <option value="">Show All</option>
-                <option value="">Rendering Engine</option>
-                <option value="">Platform</option>
-            </select>
-        </div><!--tableoptions-->
-        <table cellpadding="0" cellspacing="0" border="0" id="table2" id="menuTable" class="stdtable stdtablecb">
-            <colgroup>
-                <col class="con0" style="width: 2%"/>
-                <col class="con1" style="width: 4%"/>
-                <col class="con1" style="width: 8%"/>
-                <col class="con0" style="width: 12%"/>
-                <col class="con1" style="width: 13%"/>
-                <col class="con0" style="width: 10%"/>
-                <col class="con1" style="width: 10%"/>
-                <col class="con0" style="width: 4%"/>
-            </colgroup>
-            <thead>
-            <tr>
-                <th class="head0"><input type="checkbox" class="checkall"/></th>
-                <th class="head1">查看</th>
-                <th class="head1">所属分组</th>
-                <th class="head0">名称</th>
-                <th class="head1">路径</th>
-                <th class="head0">排序</th>
-                <th class="head0">操作</th>
-                <th class="head1">是否启用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <{foreach $menus as $menu}>
+<div class="page-header">
+    <h1>
+        控制台
+        <small>
+            <i class="icon-double-angle-right"></i>
+            查看
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+<div class="row">
+    <div class="col-xs-12">
+        <div>
+            <button class="btn btn-lg btn-success">
+                <i class="icon-ok"></i>
+                添加
+            </button>
+            <button class="btn btn-lg btn-danger">
+                <i class="icon-trash bigger-100"></i>
+                删除
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="center">
+                        <label>
+                            <input type="checkbox" class="ace"/>
+                            <span class="lbl"></span>
+                        </label>
+                    </th>
+                    <th>查看</th>
+                    <th>所属分组</th>
+                    <th class="hidden-480">名称</th>
+                    <th>路径</th>
+                    <th class="hidden-480">排序</th>
+                    <th>操作</th>
+                    <th>是否启用</th>
+                </tr>
+                </thead>
+                <tbody>
+                <{foreach $menus as $menu}>
                 <{foreach $menu.children as $children}>
                 <tr>
-                    <td align="center"><input type="checkbox"/></td>
-                    <td><a class="btn btn3 btn_search" href="javascript:;"
-                           data-url="<{$Think.const.__PUBLIC__}>/index.php/admin/panel/getChildren/menu/<{$children.id}>"
-                           title="查看子菜单"></a>
+                    <td class="center">
+                        <label>
+                            <input type="checkbox" class="ace"/>
+                            <span class="lbl"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                            <a class="blue" href="javascript:;"
+                               data-url="<{$Think.const.__PUBLIC__}>/index.php/admin/panel/getChildren/menu/<{$children.id}>"
+                               title="查看子菜单">
+                                <i class="icon-zoom-in bigger-130"></i>
+                            </a>
+                        </div>
                     </td>
                     <td><{$menu.title}></td>
                     <td><{$children.title}></td>
                     <td><{$children.type}>/<{$children.controller}>/<{$children.action}></td>
-                    <td class="center"><input type="number" value="<{$children.order}>" class="form-control input-sm"/></td>
-                    <td class="center">
-
-                        <a class="btn btn3 btn_archive" href="" title="添加子菜单"></a>
-                        <a class="btn btn3 btn_trash" href="" title="删除子菜单"></a>
+                    <td class="center"><input type="number" value="<{$children.order}>" class="form-control input-sm"/>
                     </td>
-                    <td class="center">
-                        <input type="checkbox" class=""/>
+                    <td class="hidden-480">
+                        <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                            <a class="green" href="#">
+                                <i class="icon-pencil bigger-130"></i>
+                            </a>
+
+                            <a class="red" href="#">
+                                <i class="icon-trash bigger-130"></i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="ace"/>
+                            <span class="lbl"></span>
+                        </label>
                     </td>
                 </tr>
                 <{/foreach}>
-            <{/foreach}>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- 品牌添加模态框 -->
-<div class="modal fade brand_add_modal" id="brand_add_modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
+                <{/foreach}>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
