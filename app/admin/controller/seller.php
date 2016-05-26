@@ -11,7 +11,7 @@ namespace app\admin\controller;
 
 use think\verify\Desktop;
 
-class seller extends Desktop
+class Seller extends Desktop
 {
     /**
      * 商家列表

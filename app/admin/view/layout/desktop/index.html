@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>控制台页面</title>
     <{load file="static/css/style.default.css" /}>
+    <{load file="static/js/plugins/jquery-1.7.min.js"/}>
+    <{load file="static/js/plugins/jquery-ui-1.8.16.custom.min.js"/}>
+    <{load file="static/js/plugins/jquery.cookie.js"/}>
+    <{load file="static/js/plugins/jquery.uniform.min.js"/}>
 </head>
 <body class="withvernav">
     <div class="bodywrapper">
         <div class="topheader">
             <div class="left">
-                <h1 class="logo">TP5<span>商城管理</span></h1>
+                <h1 class="logo">TP5<span>后台管理</span></h1>
                 <span class="slogan">后台管理系统</span>
 
                 <div class="search">
@@ -63,14 +67,18 @@
         <{__CONTENT__}>
     </div>
 </body>
-<{load file="static/js/plugins/jquery-1.7.min.js"/}>
-<{load file="static/js/plugins/jquery-ui-1.8.16.custom.min.js"/}>
-<{load file="static/js/plugins/jquery.cookie.js"/}>
-<{load file="static/js/plugins/jquery.uniform.min.js"/}>
-<{load file="static/js/plugins/jquery.flot.min.js"/}>
-<{load file="static/js/plugins/jquery.flot.resize.min.js"/}>
-<{load file="static/js/plugins/jquery.slimscroll.js"/}>
+
 <{load file="static/js/custom/general.js"/}>
-<{load file="static/js/custom/dashboard.js"/}>
+<{load file="static/selfJs/validate.js"/}>
 <{load file="static/selfJs/admin.js"/}>
+
+<!--<{*load file="static/js/plugins/jquery.flot.min.js"*/}>-->
+<!--<{*load file="static/js/plugins/jquery.flot.resize.min.js"*/}>-->
+<!--<{*load file="static/js/plugins/jquery.slimscroll.js"*/}>-->
+<!--<{*load file="static/js/custom/dashboard.js"*/}>-->
+
+<!-- 表格js
+<{*load file="static/js/plugins/jquery.dataTables.min.js"*}>
+<{*load file="static/js/custom/tables.js"*}>
+ end 表格js-->
 </html>

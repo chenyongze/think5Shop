@@ -20,6 +20,7 @@ class Desktop extends Controller
         $this->logicAdmin = Loader::model('Admin', 'logic');
         if (!$this->logicAdmin->checkLogin()) {
             $this->redirect('Passport/index');
+            die;
         }
         parent::__construct();
     }

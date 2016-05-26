@@ -1,124 +1,16 @@
 <div class="vernav2 iconmenu">
     <ul>
-        <li><a href="#formsub" class="editor">站点</a>
+        <{foreach $menus as $menu}>
+        <li class="current"><a href="#<{$menu.controller}><{$menu.action}>" class="editor"><{$menu.title}></a>
             <span class="arrow"></span>
-            <ul id="formsub">
-                <li><a href="forms.html">基础表单</a></li>
-                <li><a href="wizard.html">表单验证</a></li>
-                <li><a href="editor.html">编辑器</a></li>
+            <ul id="<{$menu.controller}><{$menu.action}>" class="current">
+                <{foreach $menu.children as $sonMenu}>
+                <li <{if condition="(strtolower($Think.const.CONTROLLER_NAME) eq $sonMenu.controller) and (strtolower($Think.const.ACTION_NAME) eq $sonMenu.action)"}>class="current"<{/if}>>
+                    <a href="<{$Think.const.__PUBLIC__}>/index.php/<{$sonMenu.type}>/<{$sonMenu.controller}>/<{$sonMenu.action}>"><{$sonMenu.title}></a>
+                </li>
+                <{/foreach}>
             </ul>
         </li>
-        <li><a href="#seller" class="seller">商家</a>
-            <span class="arrow"></span>
-            <ul id="seller">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-        <li><a href="#member" class="member">会员</a>
-            <span class="arrow"></span>
-            <ul id="member">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-        <li><a href="#order" class="order">订单</a>
-            <span class="arrow"></span>
-            <ul id="order">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-        <li><a href="#goods" class="goods">商品</a>
-            <span class="arrow"></span>
-            <ul id="goods">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-        <li><a href="#marketing" class="marketing">营销</a>
-            <span class="arrow"></span>
-            <ul id="marketing">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-        <li><a href="#report" class="report">报表</a>
-            <span class="arrow"></span>
-            <ul id="report">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-        <li><a href="#system" class="system">系统</a>
-            <span class="arrow"></span>
-            <ul id="system">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-        <li><a href="#logistics" class="logistics">物流</a>
-            <span class="arrow"></span>
-            <ul id="logistics">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-        <li><a href="#content" class="content">内容</a>
-            <span class="arrow"></span>
-            <ul id="content">
-                <li><a href="notfound.html">404错误页面</a></li>
-                <li><a href="forbidden.html">403错误页面</a></li>
-                <li><a href="internal.html">500错误页面</a></li>
-                <li><a href="offline.html">503错误页面</a></li>
-            </ul>
-        </li>
-
-        <!--<li><a href="filemanager.html" class="gallery">文件管理</a></li>-->
-        <!--<li><a href="elements.html" class="elements">网页元素</a></li>-->
-        <!--<li><a href="widgets.html" class="widgets">网页插件</a></li>-->
-        <!--<li><a href="calendar.html" class="calendar">日历事件</a></li>-->
-        <!--<li><a href="support.html" class="support">客户支持</a></li>-->
-        <!--<li><a href="typography.html" class="typo">文字排版</a></li>-->
-        <!--<li><a href="tables.html" class="tables">数据表格</a></li>-->
-        <!--<li><a href="buttons.html" class="buttons">按钮 &amp; 图标</a></li>-->
-        <!--<li><a href="#error" class="error">错误页面</a>-->
-            <!--<span class="arrow"></span>-->
-            <!--<ul id="error">-->
-                <!--<li><a href="notfound.html">404错误页面</a></li>-->
-                <!--<li><a href="forbidden.html">403错误页面</a></li>-->
-                <!--<li><a href="internal.html">500错误页面</a></li>-->
-                <!--<li><a href="offline.html">503错误页面</a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#addons" class="addons">其他页面</a>-->
-            <!--<span class="arrow"></span>-->
-            <!--<ul id="addons">-->
-                <!--<li><a href="newsfeed.html">新闻订阅</a></li>-->
-                <!--<li><a href="profile.html">资料页面</a></li>-->
-                <!--<li><a href="productlist.html">产品列表</a></li>-->
-                <!--<li><a href="photo.html">图片视频分享</a></li>-->
-                <!--<li><a href="gallery.html">相册</a></li>-->
-                <!--<li><a href="invoice.html">购物车</a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
+        <{/foreach}>
     </ul>
-    <a class="togglemenu"></a>
-    <br /><br />
 </div><!--leftmenu-->

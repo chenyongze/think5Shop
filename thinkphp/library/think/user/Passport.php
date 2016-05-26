@@ -23,14 +23,14 @@ class Passport
     public function checkLogin()
     {
         $userData = $this->getUserData();
-        $localType = Session::get('localType');
+        $localType = Session::get('localType', $this->userType);
         if (!$userData) return false;
         $authSign = [
             'userId' => $userData['id'],
             'userName' => $userData[$localType],
             'localType' => $localType
         ];
-        if (!Session::get('authSign') == $this->_dataAuthSign($authSign)) {
+        if (!Session::get('authSign', $this->userType) == $this->_dataAuthSign($authSign)) {
             return false;
         }
         return true;
@@ -124,7 +124,7 @@ class Passport
      */
     public function getUserId()
     {
-        return Session::get('userId');
+        return Session::get('userId', $this->userType);
     }
 
     /**
@@ -198,7 +198,7 @@ class Passport
     {
         $columns = [
             'members' => ['id', 'local', 'email', 'mobile'],
-            'admin' => ['id', 'local'],
+            'admin' => ['id', 'local', 'super', 'logincount', 'status'],
         ];
         return $columns[$this->userType];
     }
@@ -209,10 +209,10 @@ class Passport
      */
     public function setSession($userData)
     {
-        Session::set('localType', $userData['localType']);
-        Session::set('userId', $userData['userId']);
-        Session::set('userName', $userData['local']);
-        Session::set('authSign', $this->_dataAuthSign($userData));
+        Session::set('localType', $userData['localType'], $this->userType);
+        Session::set('userId', $userData['userId'], $this->userType);
+        Session::set('userName', $userData['local'], $this->userType);
+        Session::set('authSign', $this->_dataAuthSign($userData), $this->userType);
     }
 
     /**
@@ -240,9 +240,9 @@ class Passport
      */
     public function logout()
     {
-        Session::set('localType', null);
-        Session::set('userId', null);
-        Session::set('userName', null);
-        Session::set('authSign', null);
+        Session::set('localType', null, $this->userType);
+        Session::set('userId', null, $this->userType);
+        Session::set('userName', null, $this->userType);
+        Session::set('authSign', null, $this->userType);
     }
 }

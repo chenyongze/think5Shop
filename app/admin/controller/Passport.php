@@ -25,7 +25,6 @@ class Passport extends Controller
 
     public function index()
     {
-
         if ($this->logicAdmin->checkLogin()) {
             $this->redirect('index/index');
         }

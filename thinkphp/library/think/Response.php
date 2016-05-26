@@ -155,9 +155,10 @@ class Response
      * @param mixed $data 返回的数据
      * @param string $url 跳转的URL地址
      * @param integer $wait 跳转等待时间
+     * @param string $target 是否跨控制器跳转
      * @return mixed
      */
-    public static function success($msg = '', $data = '', $url = null, $wait = 3, $type)
+    public static function success($msg = '', $data = '', $url = null, $wait = 3, $target)
     {
         $code = 1;
         if (is_numeric($msg)) {
@@ -171,7 +172,7 @@ class Response
             'url'  => is_null($url) && isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : $url,
             'wait' => $wait,
         ];
-        if($type){
+        if($target){
             $result['url'] = preg_match('/^(https?:|\/)/', $url) ? $url : Url::build($url, $data);
         }
 
@@ -191,9 +192,10 @@ class Response
      * @param mixed $data 返回的数据
      * @param string $url 跳转的URL地址
      * @param integer $wait 跳转等待时间
+     * @param string $target 是否跨控制器跳转
      * @return mixed
      */
-    public static function error($msg = '', $data = '', $url = null, $wait = 3, $type)
+    public static function error($msg = '', $data = '', $url = null, $wait = 3, $target)
     {
         $code = 0;
         if (is_numeric($msg)) {
@@ -208,7 +210,7 @@ class Response
             'wait' => $wait,
         ];
 
-        if($type){
+        if($target){
             $result['url'] = preg_match('/^(https?:|\/)/', $url) ? $url : Url::build($url, $data);
         }
 

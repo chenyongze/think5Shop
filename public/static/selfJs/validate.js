@@ -69,16 +69,16 @@ var submit = function ($form) {
             if (re.code === 1) {
                 location = re.url;
             }else if(re.code === 0){
-
-                var error = '<div class="control-group">' +
+                var msg =  re.data ?  re.data : re.msg;
+                var error = '<div class="control-group errorMsg">' +
                                 '<div class="controls">' +
-                                    '<div class="alert alert-danger" style="width:170px;">' + re.data + '</div>' +
+                                    '<div class="alert alert-danger" style="width:170px;">' + msg + '</div>' +
                                 '</div>' +
                             '</div>';
                 $form.append(error);
                 alert_time = setTimeout(function () {
                     clearTimeout(alert_time);
-                    $form.find('.alert-danger').fadeOut('fast', function () {
+                    $form.find('.errorMsg').fadeOut('fast', function () {
                        this.remove();
                     });
                 }, 3000);

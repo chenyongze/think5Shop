@@ -1,0 +1,9 @@
+<ul class="headermenu">
+    <{foreach $tab as $item}>
+    <li <{if condition="(strtolower($Think.const.CONTROLLER_NAME) eq $item.controller) and (strtolower($Think.const.ACTION_NAME) eq $item.action)"}>class="current"<{/if}>>
+        <a id="test" href="<{$Think.const.__PUBLIC__}>/index.php/<{$item.type}>/<{$item.controller}>/<{$item.action}>">
+            <span class="icon icon-flatscreen"></span><{$item.title}>
+        </a>
+    </li>
+    <{/foreach}>
+</ul>

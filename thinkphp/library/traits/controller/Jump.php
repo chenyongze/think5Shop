@@ -23,13 +23,14 @@ trait Jump
      * @access public
      * @param mixed $msg 提示信息
      * @param string $url 跳转的URL地址
+     * @param string $target 是否跨控制器跳转
      * @param mixed $data 返回的数据
      * @param integer $wait 跳转等待时间
      * @return mixed
      */
-    public function error($msg = '', $url = null, $type = false, $data = '', $wait = 3)
+    public function error($msg = '', $url = null, $target = false, $data = '', $wait = 3)
     {
-        return Response::error($msg, $data, $url, $wait, $type);
+        return Response::error($msg, $data, $url, $wait, $target);
     }
 
     /**
@@ -37,13 +38,14 @@ trait Jump
      * @access public
      * @param mixed $msg 提示信息
      * @param string $url 跳转的URL地址
+     * @param string $target 是否跨控制器跳转
      * @param mixed $data 返回的数据
      * @param integer $wait 跳转等待时间
      * @return mixed
      */
-    public function success($msg = '', $url = null, $type = false, $data = '', $wait = 3)
+    public function success($msg = '', $url = null, $target = false, $data = '', $wait = 3)
     {
-        return Response::success($msg, $data, $url, $wait, $type);
+        return Response::success($msg, $data, $url, $wait, $target);
     }
 
     /**
