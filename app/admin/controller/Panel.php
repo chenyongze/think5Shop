@@ -55,6 +55,7 @@ class Panel extends Desktop
 
     public function addGroup()
     {
-        
+        var_dump($_POST);
+        return $this->fetch('Panel/modal/get-children');
     }
 }

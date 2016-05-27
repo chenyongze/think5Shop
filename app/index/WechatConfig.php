@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/5/6
- * Time: 16:13
- * Descriptions 微信基本配置
- */
-
+//配置文件
 return [
     'requestUrl' => [
         'menu' => [

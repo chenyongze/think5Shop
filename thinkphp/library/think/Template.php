@@ -38,6 +38,8 @@ class Template
         'layout_on' => false, // 布局模板开关
         'layout_name' => 'layout', // 布局模板入口文件
         'layout_item' => '{__CONTENT__}', // 布局模板的内容替换标识
+        'layout_js' => '{__JS__}', // 特定的js文件
+        'layout_css' => '{__CSS__}', // 特定的css文件
         'taglib_begin' => '{', // 标签库标签开始标记
         'taglib_end' => '}', // 标签库标签结束标记
         'taglib_load' => true, // 是否使用内置标签库之外的其它标签库，默认自动检测
@@ -329,6 +331,9 @@ class Template
 
         // 模板解析
         $this->parse($content);
+        //替换特定的 js css文件
+        $this->replaceScript($content);
+
         if ($this->config['strip_space']) {
             /* 去除html空格与换行 */
             $find = ['~>\s+<~', '~>(\s+\n|\r)~'];
@@ -346,6 +351,25 @@ class Template
         $this->storage->write($cacheFile, $content);
         $this->includeFile = [];
         return;
+    }
+
+    /**
+     * 替换特定的css js文件
+     * @param $content
+     */
+    private function replaceScript(&$content)
+    {
+        Config::load($this->config['view_path'] . '../config.php');
+        $scriptList = Config::get('script');
+        foreach ($scriptList as $type => $script) {
+            foreach ($script as $value) {
+                if (in_array(CONTROLLER_NAME, $value['controller']) && in_array(ACTION_NAME, $value['action'])) {
+                    $content = str_replace($this->config['layout_' . $type], join('', $value['script']), $content);
+                    break;
+                }
+            }
+            $content = str_replace($this->config['layout_' . $type], '', $content);
+        }
     }
 
     /**
@@ -373,10 +397,7 @@ class Template
         $this->parseLiteral($content);
         // 检查PHP语法
         $this->parsePhp($content);
-        /*
-        //检查挂件
-        $this->parseWidget($content);
-        */ 
+
         // 获取需要引入的标签库列表
         // 标签库只需要定义一次，允许引入多个一次
         // 一般放在文件的最前面
@@ -410,30 +431,7 @@ class Template
         $this->parseLiteral($content, true);
         return;
     }
-
-    /**
-     * 检查挂件
-     * @access private
-     * @param string $content 要解析的模板内容
-     * @return void
-     * @throws \think\Exception
-     */
-    /*
-    private function parseWidget(&$content)
-    {
-        $regex = $this->getRegex('widget');
-        $widget = preg_split('!' . $this->config['taglib_begin'] . '(\s*(?:\/|)[a-z][a-z\_0-9]*|)(.*?)' . $this->config['taglib_end'] . '!isu', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
-        foreach ($widget as $i => $v) {
-            if ($i % 3 !== 1 && trim($v) != 'widget')
-                continue;
-            preg_match_all($regex, $widget[$i + 1], $matches, PREG_SET_ORDER);
-            $params = Array();
-            foreach ($matches as $key => $value) {
-                $params[$value[1]] = $value[3];
-            }
-            $tmp = widget('aaa/bbb', $params);
-        }
-    }*/
+    
 
     /**
      * 检查PHP语法

@@ -11,10 +11,10 @@
 <div class="row">
     <div class="col-xs-12">
         <div>
-            <button class="btn btn-lg btn-success">
+            <a class="btn btn-lg btn-success" data-target="#cat_edit" data-toggle="modal" href="<{$Think.const.__PUBLIC__}>/index.php/admin/panel/addGroup">
                 <i class="icon-ok"></i>
                 添加
-            </button>
+            </a>
             <button class="btn btn-lg btn-danger">
                 <i class="icon-trash bigger-100"></i>
                 删除
@@ -51,7 +51,7 @@
                     </td>
                     <td>
                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                            <a class="blue" href="javascript:;"
+                            <a class="blue select" href="javascript:;"
                                data-url="<{$Think.const.__PUBLIC__}>/index.php/admin/panel/getChildren/menu/<{$children.id}>"
                                title="查看子菜单">
                                 <i class="icon-zoom-in bigger-130"></i>
@@ -65,7 +65,7 @@
                     </td>
                     <td class="hidden-480">
                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                            <a class="green" href="#">
+                            <a class="green" title="编辑" href="<{$Think.const.__PUBLIC__}>/index.php/admin/panel/addGroup">
                                 <i class="icon-pencil bigger-130"></i>
                             </a>
 
@@ -87,4 +87,8 @@
             </table>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="cat_edit" role="basic" aria-hidden="true">
+
 </div>

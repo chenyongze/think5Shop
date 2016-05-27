@@ -46,10 +46,13 @@ var ajaxRequest = function ($obj) {
 
 /*********************** end菜单表格js **********************************************/
 
+/*********************** 添加菜单 **********************************************/
+
+/*********************** end添加菜单 **********************************************/
 (function ($) {
     $('table').each(function (idx, item) {
         $(item).click(function () {
-            ajaxRequest($(item).find('a.btn_search'));
+            ajaxRequest($(item).find('a.select'));
         });
     });
 })(jQuery);

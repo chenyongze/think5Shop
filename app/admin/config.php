@@ -1,41 +1,40 @@
 <?php
 //配置文件
 return [
-    'requestUrl' => [
-        'menu' => [
-            'url' => 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=',
-            'type' => 'get',
+    'script' => [
+        'js' => [
+            [
+                'controller' => ['panel'],
+                'action' => ['menu'],
+                'script' => [//admin-menu-list.js
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/jquery.dataTables.min.js"></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/jquery.dataTables.bootstrap.js"></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/selfJs/admin/panel/menu-list.js"></script>'
+                ]
+            ],
+            [
+                'controller' => ['index'],
+                'action' => ['index'],
+                'script' => [
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/jquery-ui-1.10.3.custom.min.js"></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/jquery.ui.touch-punch.min.js></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/jquery.slimscroll.min.js"></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/jquery.easy-pie-chart.min.js"></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/jquery.sparkline.min.js"></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/flot/jquery.flot.min.js"></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/flot/jquery.flot.pie.min.js"></script>',
+                    '<script type="text/javascript" src="' . __PUBLIC__ . '/static/assets/js/flot/jquery.flot.resize.min.js"></script>',
+                ]
+            ],
         ],
-        'accessToken' => [
-            'url' => 'https://api.weixin.qq.com/cgi-bin/token',
-            'type' => 'get',
+        'css' => [
+            [
+                'controller' => [''],
+                'action' => [''],
+                'script' => [
+                    '<link rel="stylesheet" href="' . __PUBLIC__ . '/static/assets/css/font-awesome.min.css" />'
+                ]
+            ],
         ],
-    ],
-    'menu' => '{
-             "button":[
-             {
-                  "type":"click",
-                  "name":"今日歌曲",
-                  "key":"V1001_TODAY_MUSIC"
-              },
-              {
-                   "name":"菜单",
-                   "sub_button":[
-                   {
-                       "type":"view",
-                       "name":"搜索",
-                       "url":"http://www.soso.com/"
-                    },
-                    {
-                       "type":"view",
-                       "name":"视频",
-                       "url":"http://v.qq.com/"
-                    },
-                    {
-                       "type":"click",
-                       "name":"赞一下我们",
-                       "key":"V1001_GOOD"
-                    }]
-               }]
-            }'
+    ]
 ];

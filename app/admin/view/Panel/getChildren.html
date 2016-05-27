@@ -1,18 +1,32 @@
 <{foreach $menus[0]['children'] as $children}>
-    <tr data-tag="<{$menus[0]['id']}>">
-        <td align="center"><input type="checkbox"/></td>
-        <td></td>
-        <td></td>
-        <td><{$menus[0]['title']}>>><{$children.title}></td>
-        <td><{$children.type}>/<{$children.controller}>/<{$children.action}></td>
-        <td class="center"><input type="number" value="<{$children.order}>" class="form-control input-sm"/></td>
-        <td class="center">
-
-            <a class="btn btn3 btn_archive" href="" title="添加子菜单"></a>
-            <a class="btn btn3 btn_trash" href="" title="删除子菜单"></a>
-        </td>
-        <td class="center">
-            <input type="checkbox" class=""/>
-        </td>
-    </tr>
+<tr data-tag="<{$menus[0]['id']}>">
+    <td class="center">
+        <label>
+            <input type="checkbox" class="ace"/>
+            <span class="lbl"></span>
+        </label>
+    </td>
+    <td></td>
+    <td></td>
+    <td><{$menus[0]['title']}>>><{$children.title}></td>
+    <td><{$children.type}>/<{$children.controller}>/<{$children.action}></td>
+    <td class="center"><input type="number" value="<{$children.order}>" class="form-control input-sm"/>
+    </td>
+    <td class="hidden-480">
+        <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+            <a class="green" href="#">
+                <i class="icon-pencil bigger-130"></i>
+            </a>
+            <a class="red" href="#">
+                <i class="icon-trash bigger-130"></i>
+            </a>
+        </div>
+    </td>
+    <td>
+        <label>
+            <input type="checkbox" class="ace"/>
+            <span class="lbl"></span>
+        </label>
+    </td>
+</tr>
 <{/foreach}>
