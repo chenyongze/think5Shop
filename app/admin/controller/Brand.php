@@ -8,16 +8,16 @@
 
 namespace app\admin\controller;
 
-use think\verify\Desktop;
+use library\verify\Desktop;
 
 class Brand extends Desktop
 {
     /**
-     * 品牌列表
+     * 商品品牌
      */
     public function index()
     {
-
+        $this->fetch();
     }
 
     /**

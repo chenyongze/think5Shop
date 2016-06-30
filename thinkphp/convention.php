@@ -9,8 +9,7 @@ return [
     'app_status'             => '',
     // 注册的根命名空间
     'root_namespace'         => [
-        'think\verify\Desktop' => CORE_PATH . 'verify' . DS . 'Desktop' . EXT,
-        'think\user\Passport' => CORE_PATH . 'user' . DS . 'Passport' . EXT
+
     ],
     // 扩展配置文件
     'extra_config_list'      => ['database', 'route', 'validate'],
@@ -42,7 +41,7 @@ return [
     // +----------------------------------------------------------------------
 
     // 默认模块名
-    'default_module'         => 'index',
+    'default_module'         => 'home',
     // 禁止访问模块
     'deny_module_list'       => [COMMON_MODULE, 'runtime'],
     // 默认控制器名

@@ -513,13 +513,13 @@ class Cx extends Taglib
                 }
                 switch ($type) {
                     case 'js':
-                        $parseStr .= '<script type="text/javascript" src="' . __PUBLIC__  . '/' . $val . '"></script>';
+                        $parseStr .= '<script type="text/javascript" src="' . STATIC_SCRIPT_PATH  .  $val . '"></script>';
                         break;
                     case 'css':
-                        $parseStr .= '<link rel="stylesheet" type="text/css" href="' . __PUBLIC__ . '/' . $val . '" />';
+                        $parseStr .= '<link rel="stylesheet" type="text/css" href="' . STATIC_SCRIPT_PATH . $val . '" />';
                         break;
                     case 'php':
-                        $parseStr .= '<?php require_cache("' . __PUBLIC__ . '/' . $val . '"); ?>';
+                        $parseStr .= '<?php require_cache("' . $val . '"); ?>';
                         break;
                 }
             }
@@ -550,7 +550,7 @@ class Cx extends Taglib
         return $parseStr . $endStr;
     }
 
-    // import别名 采用文件方式加载(要使用命名空间必须用import) 例如 <load file="__PUBLIC__/Js/Base.js" />
+    // import别名 采用文件方式加载(要使用命名空间必须用import) 例如 <load file="STATIC_SCRIPT_PATH/Js/Base.js" />
     public function _load($tag, $content)
     {
         return $this->_import($tag, $content, true);

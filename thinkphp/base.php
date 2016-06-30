@@ -16,11 +16,12 @@ define('START_MEM', memory_get_usage());
 define('THINK_VERSION', '5.0.0 RC3');
 // 系统常量
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+defined('TEMPLATE_OPTION') or define('TEMPLATE_OPTION', 'default');//当前指定模板文件夹
+defined('X_PJAX') or define('X_PJAX', (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true'));
 defined('THINK_PATH') or define('THINK_PATH', dirname(__FILE__) . DS);
 defined('APP_PATH') or define('APP_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DS);
 defined('ROOT_PATH') or define('ROOT_PATH', dirname(APP_PATH) . DS);
 defined('__PUBLIC__') or define('__PUBLIC__', str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME'])));
-defined('REDIRECT') or define('REDIRECT', __PUBLIC__ . DS . 'index.php');
 defined('LIB_PATH') or define('LIB_PATH', THINK_PATH . 'library' . DS);
 defined('EXTEND_PATH') or define('EXTEND_PATH', ROOT_PATH . 'extend' . DS);
 defined('MODE_PATH') or define('MODE_PATH', THINK_PATH . 'mode' . DS); // 系统应用模式目录
@@ -35,7 +36,7 @@ defined('TEMP_PATH') or define('TEMP_PATH', RUNTIME_PATH . 'temp' . DS);
 defined('VENDOR_PATH') or define('VENDOR_PATH', ROOT_PATH . 'vendor' . DS);
 defined('EXT') or define('EXT', '.php');
 defined('MODEL_LAYER') or define('MODEL_LAYER', 'model');
-defined('VIEW_LAYER') or define('VIEW_LAYER', 'view');
+defined('VIEW_LAYER') or define('VIEW_LAYER', 'template');
 defined('CONTROLLER_LAYER') or define('CONTROLLER_LAYER', 'controller');
 defined('VALIDATE_LAYER') or define('VALIDATE_LAYER', 'validate');
 defined('APP_MULTI_MODULE') or define('APP_MULTI_MODULE', true); // 是否多模块

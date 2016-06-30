@@ -10,40 +10,52 @@ namespace app\admin\logic;
 
 use think\Db;
 use think\Model;
+use library;
 
 class Menus extends Model
 {
     /**
-     * 获取菜单分组
+     * 获取同级菜单
      * @param $params
+     * @param $parent
      * @return array
      */
-    public function getMenuTab($params)
+    public function getMenuBrothers($parent = 0, $params)
     {
-        return Db::table('menus')->where('parent', '0')->select();
+        //验证权限???
+        return Db::table('menus')->where('parent', $parent)->order(['order' => 'asc'])->select();
     }
 
     /**
      * 获取菜单
      * @param $params
-     * @param $active 后台菜单选中标识
      * @return array
      */
-    public function &getMenu($params, &$active)
+    public function &getMenu($params)
     {
-        //是超级管理员
-        if ($params['super']) {
-            $parentsId = Db::table('menus')
-                ->field('group_id, parent')
-                ->where(['controller' => CONTROLLER_NAME, 'action' => ACTION_NAME, 'type' => 'admin', 'display' => 'true'])
+		$where = [
+			'disabled' => 'true'
+		];
+        if ($params['is_super'] != 'true') {
+			//不是超级管理员，查询当前用户身份，或取菜单
+			$roles = Db::table('roles')->where(['role_id' => $params['role_id']])->select();
+            //(['controller' => CONTROLLER_NAME, 'action' => ACTION_NAME, 'type' => 'admin', 'display' => 'true'])
+            $group = Db::table('menus')
+                ->field('id')
+                ->where(['parent' => '0'])
+                ->where(['id' => ['in', explode(',', trim($parentsId['path'], ','))]])
                 ->find();
-            if ($parentsId['group_id'] == 0) return [];
+            if (!$group){
+				return [];
+			}
             $active = $parentsId['parent'];
-            return $this->menuAll($parentsId['group_id']);
-        } else {
-            //不是超级管理员，查询当前用户身份，或取菜单
+            return $this->menuAll($group['id']);
         }
-        return [];
+
+		$menuList = Db::table('menus')->where($where)->order(['order_by' => 'asc'])->select();
+		$menuList = library\utils::arrayChangeKey($menuList, 'id');
+        $result = library\utils::generateTree($menuList, 'parent_id');
+        return $result;
     }
 
     /**
@@ -72,7 +84,7 @@ class Menus extends Model
         $filter = ['type' => 'admin', 'display' => 'true'];
         !empty($parentId) && (!$type && $filter['parent'] = $parentId) || ($type && $filter['id'] = $parentId);
         $result = Db::table('menus')->where($filter)->order(['order' => 'asc'])->select();
-        if($type){
+        if ($type) {
             $result[0]['children'] = $this->getChildren($result[0]['id']);
         }
         return $result;
@@ -92,4 +104,63 @@ class Menus extends Model
         }
         return $oneLevel;
     }
+
+    /**
+     * 获取菜单面包屑
+     * @param $menuPath 菜单路径
+     * @return array
+     */
+    public function menuBread($menuPath)
+    {
+        $pathId = explode(',', trim($menuPath, ','));
+        if (!$pathId) {
+            return [];
+        }
+        $tmp = Db::table('menus')->field('title, id, parent')->select($pathId);
+        //排序
+        $result = [];
+        foreach ($tmp as $key => $value){
+            $result[array_search($value['id'], $pathId)] = $value;
+        }
+        return $result;
+    }
+
+    /**
+     * 保存菜单
+     * @param array $post
+     * @return bool
+     */
+    public function saveMenus(Array $post)
+    {
+        $parentId = isset($post['menus']['parent']) ? $post['menus']['parent'] : '';
+        $data = $this->getMenuData($parentId);
+        $post['menus']['path'] = $data['path'];
+        $post['menus']['group_name'] = $data['path'];
+        $jg = Db::table('menus')->insert($post['menus']);
+        return true;
+    }
+
+    /**
+     * 获取新增菜单所需数据
+     * @param $parent
+     * @return array
+     */
+    public function getMenuData($parent)
+    {
+        if(!$parent) return '';
+        $path = Db::table('menus')->field('path, group_name')->find($parent);
+        $path['path'] .= ',' . $parent;
+        return $path;
+    }
+
+    /**
+     * 获取菜单详情
+     * @param $menuId
+     * @return array
+     */
+    public function getMenuDetails($menuId)
+    {
+
+    }
+
 }

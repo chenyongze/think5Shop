@@ -197,11 +197,11 @@ class App
             }
             // 获取模块名称
             define('MODULE_NAME', strip_tags($module));
-
+            define('VIEW_PATH', THINK_PATH . '..' . DS . VIEW_LAYER . DS  . TEMPLATE_OPTION . DS . MODULE_NAME . DS);
+            define('STATIC_SCRIPT_PATH', dirname(dirname($_SERVER['SCRIPT_NAME'])) . DS . VIEW_LAYER. DS  . TEMPLATE_OPTION . DS . MODULE_NAME . DS);
             // 模块初始化
             if (MODULE_NAME && !in_array(MODULE_NAME, $config['deny_module_list']) && is_dir(APP_PATH . MODULE_NAME)) {
                 define('MODULE_PATH', APP_PATH . MODULE_NAME . DS);
-                define('VIEW_PATH', MODULE_PATH . VIEW_LAYER . DS);
                 // 初始化模块
                 self::initModule(MODULE_NAME, $config);
             } else {
@@ -211,7 +211,6 @@ class App
             // 单一模块部署
             define('MODULE_NAME', '');
             define('MODULE_PATH', APP_PATH);
-            define('VIEW_PATH', MODULE_PATH . VIEW_LAYER . DS);
         }
 
         // 获取控制器名

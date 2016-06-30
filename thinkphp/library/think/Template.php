@@ -361,6 +361,7 @@ class Template
     {
         Config::load($this->config['view_path'] . '../config.php');
         $scriptList = Config::get('script');
+		if(!$scriptList) return;
         foreach ($scriptList as $type => $script) {
             foreach ($script as $value) {
                 if (in_array(CONTROLLER_NAME, $value['controller']) && in_array(ACTION_NAME, $value['action'])) {

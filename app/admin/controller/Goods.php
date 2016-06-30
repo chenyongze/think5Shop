@@ -8,7 +8,8 @@
 
 namespace app\admin\controller;
 
-use think\verify\Desktop;
+use library\verify\Desktop;
+
 class Goods extends Desktop
 {
     /**
@@ -16,14 +17,6 @@ class Goods extends Desktop
      */
     public function index()
     {
-//        $content = '<{widget action="public/index" params="aaa" ccc=ddd}>
-//        <{include action="public/index"}>
-//        <{include action="public/index" params="bbb"}>';
-//        $tmp = preg_split('!\<\{(\s*(?:\/|)[a-z][a-z\_0-9]*|)(.*?)\}\>!isu',$content,-1,PREG_SPLIT_DELIM_CAPTURE);
-//        preg_match_all('/([a-z0-9\_\-]+)=(\'|"|)(.*?(?:[^\\\\]|))\2\s/isu',$tmp[2].' ',$matches,PREG_SET_ORDER);
-//        print_r($tmp);
-//        print_r($matches);
-//        var_dump(2 % 3);
         return $this->fetch();
     }
 
@@ -33,6 +26,14 @@ class Goods extends Desktop
     public function details()
     {
 
+    }
+
+    /**
+     * 商品回收站
+     */
+    public function trash()
+    {
+        return $this->fetch();
     }
 
     /**
@@ -64,7 +65,7 @@ class Goods extends Desktop
      */
     public function add()
     {
-
+        return $this->fetch();
     }
 
     /**

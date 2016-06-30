@@ -1,0 +1,21 @@
+<ul class="nav nav-list">
+    <{foreach $menus as $menu}>
+    <li ><!-- class="active open" -->
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-desktop"></i> <!-- icon menu_icon -->
+            <span class="menu-text"><{$menu.title}></span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+        <ul class="submenu">
+            <{foreach $menu.children as $key => $sonMenu}>
+            <li>
+                <a href="<{$Think.const.__PUBLIC__}>/index.php/admin/<{$sonMenu.action}>" pjax="true" class="menus">
+                    <i class="icon-double-angle-right"></i>
+                    <{$sonMenu.title}>
+                </a>
+            </li>
+            <{/foreach}>
+        </ul>
+    </li>
+    <{/foreach}>
+</ul><!-- /.nav-list -->

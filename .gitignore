@@ -1,4 +1,7 @@
-.idea
+.idea/
 composer.lock
 *.log
 runtime/
+upload/
+logs/
+

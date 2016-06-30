@@ -8,7 +8,7 @@
 
 namespace app\admin\controller;
 
-use think\verify\Desktop;
+use library\verify\Desktop;
 
 class Member extends Desktop
 {

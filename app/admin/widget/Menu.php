@@ -10,24 +10,20 @@ namespace app\admin\widget;
 
 use think\Controller;
 use think\Loader;
-use think\verify\Desktop;
 
-class Menu extends Desktop
+class Menu extends Controller
 {
     protected $menus;
+    protected $logicAdmin;
     protected $adminInfo;
 
     public function __construct()
     {
         parent::__construct();
+        $this->view->engine->layout(false);
         $this->menus = Loader::model('Menus', 'logic');
+        $this->logicAdmin = Loader::model('Admin', 'logic');
         $this->adminInfo = $this->logicAdmin->getUserData();
-    }
-
-    public function menuTab()
-    {
-        $this->assign('tab', $this->menus->getMenuTab($this->adminInfo));
-        return $this->fetch('widget/menu-tab');
     }
 
     /**
@@ -37,8 +33,10 @@ class Menu extends Desktop
      */
     public function index($params)
     {
+
         $active = 0;
-        $this->assign('menus', $this->menus->getMenu($this->adminInfo, $active));
+		$result = $this->menus->getMenu($this->adminInfo);
+        $this->assign('menus', $result);
         $this->assign('active',$active);
         return $this->fetch('widget/left-menu');
     }

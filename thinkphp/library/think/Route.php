@@ -333,10 +333,10 @@ class Route
                 }
 
                 if (0 === strpos($result, '\\')) {
-                    // 绑定到命名空间 例如 \app\index\behavior
+                    // 绑定到命名空间 例如 \app\home\behavior
                     self::$bind = ['type' => 'namespace', 'namespace' => $result];
                 } elseif (0 === strpos($result, '@')) {
-                    // 绑定到类 例如 \app\index\controller\User
+                    // 绑定到类 例如 \app\home\controller\User
                     self::$bind = ['type' => 'class', 'class' => substr($result, 1)];
                 } elseif (0 === strpos($result, '[')) {
                     // 绑定到分组 例如 [user]

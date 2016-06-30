@@ -9,21 +9,20 @@ var ajaxRequest = function ($obj) {
     if($obj.parents('tbody').find('tr[data-tag=' + tag + ']').html()){
         return false;
     }
-    var pathName = window.document.location.pathname;
-    var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
-    var path = '/think5shop/';
     var empty = '<tr id="empty"><td colspan="8" align="center">暂无数据</td></tr>';
     var illegal = '<tr id="illegal"><td colspan="8" align="center">未知错误</td></tr>';
-    var send = '<tr id="img"><td colspan="8" align="center"><img src="' + projectName + path + 'public/static/images/loaders/loader10.gif" /></td></tr>';
+    var send = '<tr id="img"><td colspan="8" align="center"><i class="icon-spinner icon-spin orange bigger-125"></i></td></tr>';
     jQuery.ajax({
         'parentTr': $obj.parents('tr'),
         'url': url,
         'type': 'post',
-        'dataType': 'json',
+        'dataType': 'html',
         'data': '',
         'success': function (responseText) {
             var html = responseText ? responseText : empty;
-            this.parentTr.after(html);
+            this.parentTr.parent('tbody').html(html);
+            tableInit();
+            replaceUrl(url);
         },
         'error': function () {
             this.parentTr.after(illegal);
@@ -32,7 +31,7 @@ var ajaxRequest = function ($obj) {
             var self = this;
             alert_time = setTimeout(function () {
                 clearTimeout(alert_time);
-                self.parentTr.parents('tbody').find('#empty, illegal').fadeOut('fast', function () {
+                self.parentTr.parents('tbody').find('#empty, #illegal').fadeOut('fast', function () {
                     this.remove();
                 });
             }, 3000);
@@ -49,10 +48,17 @@ var ajaxRequest = function ($obj) {
 /*********************** 添加菜单 **********************************************/
 
 /*********************** end添加菜单 **********************************************/
-(function ($) {
-    $('table').each(function (idx, item) {
-        $(item).click(function () {
-            ajaxRequest($(item).find('a.select'));
+var tableInit = function () {
+    jQuery('table').each(function (idx, item) {
+        jQuery(item).find('.selectMenu').click(function () {
+            ajaxRequest($(this));
         });
     });
+};
+
+var replaceUrl = function (url) {
+    history.pushState({}, document.title, url);
+};
+(function ($) {
+    tableInit();
 })(jQuery);

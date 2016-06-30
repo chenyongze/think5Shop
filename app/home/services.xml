@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<services>
+    <service id="home">
+        <class>library\services\Services</class>
+        <class>library\services\Services</class>
+        <class>library\services\Services</class>
+        <class>library\services\Services</class>
+
+    </service>
+    <service id="admin">
+        <class>adminClass1</class>
+        <class>adminClass2</class>
+    </service>
+</services>

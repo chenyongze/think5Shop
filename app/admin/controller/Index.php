@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\Controller;
 
-use think\verify\Desktop;
+use library\verify\Desktop;
 use think\Db;
 
 
@@ -11,10 +11,4 @@ class Index extends Desktop
     {
        return $this->fetch();
     }
-
-    public function testTmp()
-    {
-        return $this->fetch();
-    }
-
 }

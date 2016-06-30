@@ -11,6 +11,8 @@
 
 namespace think;
 
+use library;
+
 class Loader
 {
     // 类名映射
@@ -23,9 +25,11 @@ class Loader
     protected static $namespaceAlias = [];
     // PSR-4
     private static $prefixLengthsPsr4 = [];
-    private static $prefixDirsPsr4    = [];
+    private static $prefixDirsPsr4 = [];
     // PSR-0
     private static $prefixesPsr0 = [];
+
+    private static $services = [];
 
     // 自动加载
     public static function autoload($class)
@@ -132,7 +136,7 @@ class Loader
         if (is_file(VENDOR_PATH . 'composer/autoload_namespaces.php')) {
             $map = require VENDOR_PATH . 'composer/autoload_namespaces.php';
             foreach ($map as $namespace => $path) {
-                self::$prefixesPsr0[$namespace[0]][$namespace] = (array) $path;
+                self::$prefixesPsr0[$namespace[0]][$namespace] = (array)$path;
             }
         }
 
@@ -144,7 +148,7 @@ class Loader
                     throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
                 }
                 self::$prefixLengthsPsr4[$namespace[0]][$namespace] = $length;
-                self::$prefixDirsPsr4[$namespace]                   = (array) $path;
+                self::$prefixDirsPsr4[$namespace] = (array)$path;
             }
         }
 
@@ -192,7 +196,7 @@ class Loader
         if (false !== $pos = strrpos($class, '\\')) {
             // namespaced class name
             $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)
-            . strtr(substr($logicalPathPsr4, $pos + 1), '_', DS);
+                . strtr(substr($logicalPathPsr4, $pos + 1), '_', DS);
         } else {
             // PEAR-like class name
             $logicalPathPsr0 = strtr($class, '_', DS) . $ext;
@@ -223,7 +227,7 @@ class Loader
     public static function import($class, $baseUrl = '', $ext = EXT)
     {
         static $_file = [];
-        $class        = str_replace(['.', '#'], [DS, '.'], $class);
+        $class = str_replace(['.', '#'], [DS, '.'], $class);
         if (isset($_file[$class . $baseUrl])) {
             return true;
         }
@@ -300,7 +304,7 @@ class Loader
     public static function controller($name, $layer = '', $empty = '')
     {
         static $_instance = [];
-        $layer            = $layer ?: CONTROLLER_LAYER;
+        $layer = $layer ?: CONTROLLER_LAYER;
         if (isset($_instance[$name . $layer])) {
             return $_instance[$name . $layer];
         }
@@ -311,7 +315,7 @@ class Loader
         }
         $class = self::parseClass($module, $layer, $name);
         if (class_exists($class)) {
-            $action                    = new $class;
+            $action = new $class;
             $_instance[$name . $layer] = $action;
             return $action;
         } elseif ($empty && class_exists($emptyClass = self::parseClass($module, $layer, $empty))) {
@@ -333,7 +337,7 @@ class Loader
             return new Validate;
         }
         static $_instance = [];
-        $layer            = $layer ?: VALIDATE_LAYER;
+        $layer = $layer ?: VALIDATE_LAYER;
         if (isset($_instance[$name . $layer])) {
             return $_instance[$name . $layer];
         }
@@ -376,10 +380,10 @@ class Loader
      */
     public static function action($url, $vars = [], $layer = CONTROLLER_LAYER)
     {
-        $info   = pathinfo($url);
+        $info = pathinfo($url);
         $action = $info['basename'];
         $module = '.' != $info['dirname'] ? $info['dirname'] : CONTROLLER_NAME;
-        $class  = self::controller($module, $layer);
+        $class = self::controller($module, $layer);
         if ($class) {
             if (is_scalar($vars)) {
                 if (strpos($vars, '=')) {
@@ -391,10 +395,11 @@ class Loader
             return App::invokeMethod([$class, $action . Config::get('action_suffix')], $vars);
         }
     }
+
     /**
      * 取得对象实例 支持调用类的静态方法
      *
-     * @param string $class  对象类名
+     * @param string $class 对象类名
      * @param string $method 类的静态方法名
      *
      * @return mixed
@@ -403,12 +408,12 @@ class Loader
     public static function instance($class, $method = '')
     {
         static $_instance = [];
-        $identify         = $class . $method;
+        $identify = $class . $method;
         if (!isset($_instance[$identify])) {
             if (class_exists($class)) {
                 $o = new $class();
                 if (!empty($method) && method_exists($o, $method)) {
-                    $_instance[$identify] = call_user_func_array([ & $o, $method], []);
+                    $_instance[$identify] = call_user_func_array([& $o, $method], []);
                 } else {
                     $_instance[$identify] = $o;
                 }
@@ -429,7 +434,9 @@ class Loader
     public static function parseName($name, $type = 0)
     {
         if ($type) {
-            return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {return strtoupper($match[1]);}, $name));
+            return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+                return strtoupper($match[1]);
+            }, $name));
         } else {
             return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
         }
@@ -444,10 +451,51 @@ class Loader
      */
     public static function parseClass($module, $layer, $name)
     {
-        $name  = str_replace(['/', '.'], '\\', $name);
+        $name = str_replace(['/', '.'], '\\', $name);
         $array = explode('\\', $name);
         $class = self::parseName(array_pop($array), 1) . (CLASS_APPEND_SUFFIX ? ucfirst($layer) : '');
-        $path  = $array ? implode('\\', $array) . '\\' : '';
+        $path = $array ? implode('\\', $array) . '\\' : '';
         return APP_NAMESPACE . '\\' . (APP_MULTI_MODULE ? $module . '\\' : '') . $layer . '\\' . $path . $class;
     }
+
+    /**
+     * 获取单个对象 services
+     * @param $serviceId
+     * @return mixed
+     */
+    public static function service($serviceId)
+    {
+        return current(self::serviceList($serviceId));
+    }
+
+    /**
+     * 获取对象数组 services
+     * @param $serviceId
+     * @return bool|mixed
+     */
+    public static function serviceList($serviceId)
+    {
+        if(isset(self::$services[$serviceId])) return self::$services[$serviceId];
+        $xmlFile = APP_PATH . MODULE_NAME . "/services.xml";
+        if (!is_file($xmlFile)) return false;
+        $parser = xml_parser_create();
+        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+        xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+        xml_parse_into_struct($parser, file_get_contents($xmlFile), $tags);
+        xml_parser_free($parser);
+        $open = false;
+        foreach ($tags as $key => $item) {
+            ($item['type'] == 'open' && isset($item['attributes']['id']) && $item['attributes']['id'] == $serviceId && $open = true) ||
+            ($item['type'] == 'close' && $open = false);
+            if ($open && $item['type'] == 'complete' && is_file(ROOT_PATH . $item['value'] . '.php')) {
+                self::$services[$serviceId][] = new $item['value'];
+                $break = true;
+                continue;
+            }
+            if(isset($break) && $break === true) break;
+        }
+        return self::$services[$serviceId];
+    }
+
+
 }

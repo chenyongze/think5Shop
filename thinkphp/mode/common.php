@@ -16,6 +16,7 @@ return [
     // 命名空间
     'namespace' => [
         'think'       => LIB_PATH . 'think' . DS,
+        'library' => THINK_PATH . '..' . DS . 'library' . DS,
         'behavior'    => LIB_PATH . 'behavior' . DS,
         'traits'      => LIB_PATH . 'traits' . DS,
         APP_NAMESPACE => APP_PATH,

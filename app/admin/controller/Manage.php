@@ -8,10 +8,27 @@
 
 namespace app\admin\controller;
 
-use think\verify\Desktop;
+use library\verify\Desktop;
 
 class Manage extends Desktop
 {
+
+    /**
+     * 管理员列表
+     */
+    public function index()
+    {
+        return $this->fetch();
+    }
+
+    /**
+     * 管理员日志
+     */
+    public function logs()
+    {
+        return $this->fetch();
+    }
+
     /**
      * 修改权限
      */
