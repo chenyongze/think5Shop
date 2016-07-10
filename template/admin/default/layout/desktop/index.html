@@ -19,6 +19,14 @@
     <{load file="static/css/ace-rtl.min.css" /}>
     <{load file="static/css/ace-skins.min.css" /}>
 
+	<!--[if !IE]> -->
+	<{load file="static/js/jquery.2.0.3.min.js"/}>
+	<!-- <![endif]-->
+
+	<!--[if IE]>
+	<{load file="static/js/jquery.1.10.2.min.js"/}>
+	<![endif]-->
+
     <!--[if lte IE 8]>
     <{load file="static/css/ace-ie.min.css" /}>
     <![endif]-->
@@ -161,14 +169,6 @@
     </a>
 </div><!-- /.main-container -->
 <!-- basic scripts -->
-
-<!--[if !IE]> -->
-<{load file="static/js/jquery.2.0.3.min.js"/}>
-<!-- <![endif]-->
-
-<!--[if IE]>
-<{load file="static/js/jquery.1.10.2.min.js"/}>
-<![endif]-->
 
 <{load file="static/js/bootstrap.min.js"/}>
 <{load file="static/js/typeahead-bs2.min.js"/}>

@@ -504,19 +504,26 @@ class Cx extends Taglib
             $endStr = '<?php endif; ?>';
         }
         if ($isFile) {
-
             // 文件方式导入
             $array = explode(',', $file);
             foreach ($array as $val) {
                 if (!$type || isset($reset)) {
                     $type = $reset = strtolower(substr(strrchr($val, '.'), 1));
                 }
+                $path = STATIC_SCRIPT_PATH;
+                if (strpos($val, '@')) {
+                    //调用其他模块样式
+                    list($module, $val) = explode('@', $val);
+                    $path = THINK_PATH . '..' . DS . VIEW_LAYER . DS .(APP_MULTI_MODULE ? $module . DS : '');
+                    $path = is_dir($path . TEMPLATE_OPTION  . DS ) ? $path . TEMPLATE_OPTION  . DS : $path . 'default' . DS ;
+                }
+
                 switch ($type) {
                     case 'js':
-                        $parseStr .= '<script type="text/javascript" src="' . STATIC_SCRIPT_PATH  .  $val . '"></script>';
+                        $parseStr .= '<script type="text/javascript" src="' . $path  .  $val . '"></script>';
                         break;
                     case 'css':
-                        $parseStr .= '<link rel="stylesheet" type="text/css" href="' . STATIC_SCRIPT_PATH . $val . '" />';
+                        $parseStr .= '<link rel="stylesheet" type="text/css" href="' . $path . $val . '" />';
                         break;
                     case 'php':
                         $parseStr .= '<?php require_cache("' . $val . '"); ?>';

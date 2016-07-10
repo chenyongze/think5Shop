@@ -1,0 +1,78 @@
+
+		<div class="form-group" id="region<{$params.id}>">
+			<input type="hidden" data-v="" name="<{$params.name}>" value="<{$params.value}>"  package="mainland"/>
+			<label class="control-label col-xs-12 col-sm-2 no-padding-right"for="platform"><{$params.label}></label>
+			<{foreach $rows as $key => $item}>
+			<{if $item === 0}>
+			<div class="col-xs-12 col-sm-1 orgion" style="padding:0; width:auto">
+				<div class="clearfix">
+					<select class="input-medium"  data-level-index="<{$item}>" name="platform">
+						<option value="">请选择</option>
+					</select>
+				</div>
+			</div>
+			<{else}>
+			<div class="col-xs-12 col-sm-1 orgion" style="padding:0; width:auto" >
+				<div class="clearfix">
+					<select class="input-medium"  data-level-index="<{$item}>" name="platform"  style="visibility:hidden">
+					</select>
+				</div>
+			</div>
+			<{/if}>
+			<{/foreach}>
+		</div>
+	</div>
+
+<script>
+	// 地区联动验证 返回 callback
+	function region_union_require(e){
+		var obj = jQuery(e[0]).parents('#region<{$params.id}>');
+		var label = jQuery(obj).parent().find('label');
+		if(label.length > 0)
+		{
+			label.removeClass('error').addClass('right').html("&nbsp;");	
+		}else{
+			var name = jQuery(e[0]).parent().find("input[type=hidden]").attr("name");
+			jQuery(obj).parent().append(jQuery('<label id="' + name + '-error" for="' + name + '" class="right"></label>').html("&nbsp;"));
+		}
+	}
+
+	!function(){    
+		var region_js_path ='/shop/thinkphp5/template/help/default/static/';
+		var region_data_path ='/shop/thinkphp5/template/help/default/static/';
+		var callback = '';
+		
+		var _region_init = function(region_panel_id,region_data,callback){
+			region_sel.init(region_panel_id,region_data, callback);//REGION_DATA FROM SCRIPT
+
+		}
+		function region_init(){
+			if( typeof(region_sel)!='undefined'){
+				return _region_init(jQuery('#region<{$params.id}>'), REGION_DATA,callback);
+			}else{
+				jQuery.ajax({
+					url:region_js_path+'region_sel.js',
+					dataType:'script',
+					complete:function(){
+						_region_init(jQuery('#region<{$params.id}>'), REGION_DATA,callback);
+					}
+				});
+			}
+		}
+		var regionInit = function(){
+			if(typeof(REGION_DATA)=='undefined'){
+				var url = region_data_path + 'region_data.js';
+				jQuery.ajax({
+					url: url,
+					dataType:'script',
+					complete:function(){
+						region_init();
+					}
+				});
+			}else{
+				region_init();
+			}
+		};
+		regionInit();
+	}();
+</script>

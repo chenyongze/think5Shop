@@ -9,8 +9,14 @@ class Index extends Controller
 {
     public function index()
     {
+        $test = [
+            'aaa' => 'bbb',
+            'ccc' => 'ddd'
+        ];
+        $this->assign('rows', $test);
+        $this->assign('label', '测试');
+        $this->assign('value', 'value111');
         return $this->fetch('index', ['aaa' => '222']);
-
     }
 
 }

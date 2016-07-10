@@ -85,7 +85,8 @@ class Think
         $template = str_replace(['/', ':'], $depr, $template);
         if (strpos($template, '@')) {
             list($module, $template) = explode('@', $template);
-            $path                    = APP_PATH . (APP_MULTI_MODULE ? $module . DS : '') . VIEW_LAYER . DS;
+            $path = THINK_PATH . '..' . DS . VIEW_LAYER . DS .(APP_MULTI_MODULE ? $module . DS : '');
+            $path = is_dir($path . TEMPLATE_OPTION  . DS ) ? $path . TEMPLATE_OPTION  . DS : $path . 'default'  . DS ;
         } else {
             $path = $this->config['view_path'];
         }

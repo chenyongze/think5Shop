@@ -197,8 +197,10 @@ class App
             }
             // 获取模块名称
             define('MODULE_NAME', strip_tags($module));
-            define('VIEW_PATH', THINK_PATH . '..' . DS . VIEW_LAYER . DS  . TEMPLATE_OPTION . DS . MODULE_NAME . DS);
-            define('STATIC_SCRIPT_PATH', dirname(dirname($_SERVER['SCRIPT_NAME'])) . DS . VIEW_LAYER. DS  . TEMPLATE_OPTION . DS . MODULE_NAME . DS);
+            $view_path = THINK_PATH . '..' . DS . VIEW_LAYER . DS  . MODULE_NAME. DS;
+            $view_path = is_dir($view_path . TEMPLATE_OPTION  . DS) ? $view_path . TEMPLATE_OPTION  . DS : $view_path . 'default'  . DS;
+            define('VIEW_PATH', $view_path);
+            define('STATIC_SCRIPT_PATH', dirname(dirname($_SERVER['SCRIPT_NAME'])) . DS . VIEW_LAYER. DS  . MODULE_NAME. DS . TEMPLATE_OPTION  . DS);
             // 模块初始化
             if (MODULE_NAME && !in_array(MODULE_NAME, $config['deny_module_list']) && is_dir(APP_PATH . MODULE_NAME)) {
                 define('MODULE_PATH', APP_PATH . MODULE_NAME . DS);
