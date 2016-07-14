@@ -6,10 +6,10 @@
  * Time: 20:41
  */
 
-namespace library\image;
+namespace extend\image;
 
 
 class Image
 {
-
+    
 }

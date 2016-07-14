@@ -4,13 +4,14 @@
  * User: nice
  * Date: 2016/7/2
  * Time: 22:53
+ * 帮助类 常用挂件
  */
 
-namespace library\help;
+namespace extend\help;
 
 use think\Controller;
 
-class Input extends Controller
+class Common extends Controller
 {
     public function init($method, &$params)
     {
@@ -24,7 +25,7 @@ class Input extends Controller
 		$this->assign('params', $params);
 		$rows = [0 => 0, 1 => 1, 2 => 2];
         $this->assign('rows', $rows);
-        return $this->fetch('help@input/select');
+        return $this->fetch('help@common/select');
     }
 
     /**
@@ -34,7 +35,10 @@ class Input extends Controller
      */
     protected function _image(&$params)
     {
-        return $this->fetch('help@input/image');
+        $this->assign('id', uniqid());
+        $this->assign('name', 'avatar');
+        $this->assign('value', 'asdfasdfsdfds');
+        return $this->fetch('help@common/image');
     }
 
     /**
@@ -44,7 +48,7 @@ class Input extends Controller
      */
     protected function _imageArray(&$params)
     {
-        return $this->fetch('help@input/imageArray');
+        return $this->fetch('help@common/imageArray');
     }
 
     /**
@@ -54,7 +58,7 @@ class Input extends Controller
      */
     protected function _flashImage(&$params)
     {
-        return $this->fetch('help@input/flashImage');
+        return $this->fetch('help@common/flashImage');
     }
 
     /**
@@ -69,7 +73,7 @@ class Input extends Controller
 		$this->assign('params', $params);
 		$rows = [0 => 0, 1 => 1, 2 => 2];
         $this->assign('rows', $rows);
-        return $this->fetch('help@input/region');
+        return $this->fetch('help@common/region');
     }
 
     /**
@@ -79,6 +83,6 @@ class Input extends Controller
      */
     protected function _html(&$params)
     {
-        return $this->fetch('help@input/html');
+        return $this->fetch('help@common/html');
     }
 }

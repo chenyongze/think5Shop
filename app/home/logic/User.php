@@ -8,10 +8,9 @@
 
 namespace app\home\logic;
 
+use extend\user\Passport;
 
-
-class User extends \library\user\Passport
+class User extends Passport
 {
     public $userType = 'members';
-    
 }

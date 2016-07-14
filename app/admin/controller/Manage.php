@@ -8,9 +8,9 @@
 
 namespace app\admin\controller;
 
-use library\verify\Desktop;
+use extend\verify\Admin;
 
-class Manage extends Desktop
+class Manage extends Admin
 {
 
     /**

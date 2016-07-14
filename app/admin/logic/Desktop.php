@@ -7,7 +7,7 @@
  * Descriptions 后台统一验证
  */
 
-namespace library\verify;
+namespace extend\verify;
 
 use think\Controller;
 use think\Loader;

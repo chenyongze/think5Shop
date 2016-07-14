@@ -6,7 +6,7 @@
  * Time: 16:31
  */
 
-namespace library\user;
+namespace extend\user;
 
 use think\Loader;
 use think\Model;

@@ -11,7 +11,7 @@
 
 namespace think;
 
-use library;
+use extend;
 
 class Loader
 {

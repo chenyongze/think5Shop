@@ -10,7 +10,7 @@ namespace app\admin\logic;
 
 use think\Db;
 use think\Model;
-use library;
+use extend;
 
 class Menus extends Model
 {
@@ -53,8 +53,8 @@ class Menus extends Model
         }
 
 		$menuList = Db::table('menus')->where($where)->order(['order_by' => 'asc'])->select();
-		$menuList = library\utils::arrayChangeKey($menuList, 'id');
-        $result = library\utils::generateTree($menuList, 'parent_id');
+		$menuList = extend\utils::arrayChangeKey($menuList, 'id');
+        $result = extend\utils::generateTree($menuList, 'parent_id');
         return $result;
     }
 

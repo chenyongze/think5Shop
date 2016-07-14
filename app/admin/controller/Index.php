@@ -1,11 +1,12 @@
 <?php
+
 namespace app\admin\Controller;
 
-use library\verify\Desktop;
+use extend\verify\Admin;
 use think\Db;
 
 
-class Index extends Desktop
+class Index extends Admin
 {
     public function index()
     {

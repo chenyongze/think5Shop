@@ -8,9 +8,9 @@
 
 namespace app\admin\controller;
 
-use library\verify\Desktop;
+use extend\verify\Admin;
 
-class Brand extends Desktop
+class Brand extends Admin
 {
     /**
      * 商品品牌

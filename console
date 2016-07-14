@@ -11,7 +11,7 @@
 // +----------------------------------------------------------------------
 
 // 定义项目路径
-define('APP_PATH', './application/');
+define('APP_PATH', './app/');
 // 定义应用模式为console
 define('APP_MODE', 'console');
 // 加载框架引导文件

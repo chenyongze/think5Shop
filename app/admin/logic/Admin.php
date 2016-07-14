@@ -8,7 +8,7 @@
 
 namespace app\admin\logic;
 
-use library\user\Passport;
+use extend\user\Passport;
 
 class Admin extends Passport
 {

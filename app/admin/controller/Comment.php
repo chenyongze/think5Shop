@@ -8,9 +8,9 @@
 
 namespace app\admin\controller;
 
-use library\verify\Desktop;
+use extend\verify\Admin;
 
-class Comment extends Desktop
+class Comment extends Admin
 {
     /**
      * 用户评论

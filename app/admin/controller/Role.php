@@ -8,9 +8,9 @@
 
 namespace app\admin\controller;
 
-use library\verify\Desktop;
+use extend\verify\Admin;
 
-class Role extends Desktop
+class Role extends Admin
 {
     /**
      * 管理员管理

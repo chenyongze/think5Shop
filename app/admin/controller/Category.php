@@ -8,9 +8,9 @@
 
 namespace app\admin\controller;
 
-use library\verify\Desktop;
+use extend\verify\Admin;
 
-class Category extends Desktop
+class Category extends Admin
 {
     /**
      * 商品分类

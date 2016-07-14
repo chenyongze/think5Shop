@@ -1,0 +1,134 @@
+<div class="col-xs-4">
+    <div data-module="uploader" class="uploader" name="el_6b66fd1" tag="图片上传">
+        <div>
+            <img id="ImgPr<{$id}>" src="<{$Think.STATIC_SCRIPT_PATH}>../../help/default/static/image/add.jpg">
+        </div>
+        <input type="file" id="up<{$id}>" name="<{$name}>" class="handle" />
+        <input type="hidden" name="ec_group_manager[attach]" value="<{$value}>"/>
+    </div>
+</div>
+<style>
+    .uploader {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .uploader .handle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        width: 120px;
+        height: 120px;
+    }
+
+    .uploader .handle, .uploader .thumb {
+        cursor: pointer;
+    }
+
+    #ImgPr {
+        width: 120px;
+        height: 120px;
+    }
+</style>
+<script>
+    $(function () {
+        $("#up<{$id}>").uploadPreview({ Img: "ImgPr<{$id}>", Width: 120, Height: 120 });
+    });
+    jQuery.fn.extend({
+        uploadPreview: function (opts) {
+            var _self = this,
+                    _this = $(this);
+            opts = jQuery.extend({
+                Img: "ImgPr<{$id}>",
+                Width: 100,
+                Height: 100,
+                ImgType: ["gif", "jpeg", "jpg", "bmp", "png"],
+                Callback: function () {}
+            }, opts || {});
+            _self.getObjectURL = function (file) {
+                var url = null;
+                if (window.createObjectURL != undefined) {
+                    url = window.createObjectURL(file);
+                } else if (window.URL != undefined) {
+                    url = window.URL.createObjectURL(file);
+                } else if (window.webkitURL != undefined) {
+                    url = window.webkitURL.createObjectURL(file);
+                }
+                return url
+            };
+            _this.change(function () {
+                if (this.value) {
+                    if (!RegExp("\.(" + opts.ImgType.join("|") + ")$", "i").test(this.value.toLowerCase())) {
+                        alert("选择文件错误,图片类型必须是" + opts.ImgType.join("，") + "中的一种");
+                        this.value = "";
+                        return false
+                    }
+                    if ($.browser.msie) {
+                        try {
+                            $("#" + opts.Img).attr('src', _self.getObjectURL(this.files[0]))
+                        } catch (e) {
+                            var src = "";
+                            var obj = $("#" + opts.Img);
+                            var div = obj.parent("div")[0];
+                            _self.select();
+                            if (top != self) {
+                                window.parent.document.body.focus()
+                            } else {
+                                _self.blur()
+                            }
+                            src = document.selection.createRange().text;
+                            document.selection.empty();
+                            obj.hide();
+                            obj.parent("div").css({
+                                'filter': 'progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)',
+                                'width': opts.Width + 'px',
+                                'height': opts.Height + 'px'
+                            });
+                            div.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = src
+                        }
+                    } else {
+                        $("#" + opts.Img).attr('src', _self.getObjectURL(this.files[0])).css({'width': opts.Width + 'px',
+                            'height': opts.Height + 'px'});
+                    }
+                    opts.Callback()
+                }
+            })
+        }
+    });
+
+
+
+
+
+
+
+
+//    function PreviewImage(imgFile) {
+//        var filextension = imgFile.value.substring(imgFile.value.lastIndexOf("."), imgFile.value.length);
+//        filextension = filextension.toLowerCase();
+//        if ((filextension != '.jpg') && (filextension != '.gif') && (filextension != '.jpeg') && (filextension != '.png') && (filextension != '.bmp')) {
+//            alert("对不起，系统仅支持标准格式的照片，请您调整格式后重新上传，谢谢 !");
+//            imgFile.focus();
+//        }
+//        else {
+//            var path;
+//            if (document.all)//IE
+//            {
+//                imgFile.select();
+//                path = document.selection.createRange().text;
+//                document.getElementById("imgPreview").innerHTML = "";
+//                document.getElementById("imgPreview").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果
+//            }
+//            else//FF
+//            {
+//                path = window.URL.createObjectURL(imgFile.files[0]);// FF 7.0以上
+//                //path = imgFile.files[0].getAsDataURL();// FF 3.0
+//                document.getElementById("ImgPr").src = path;
+//                //document.getElementById("img1").src = path;
+//            }
+//        }
+//    }
+</script>

@@ -19,5 +19,11 @@ class Index extends Controller
         return $this->fetch('index', ['aaa' => '222']);
     }
 
+
+    public function test()
+    {
+        return $this->fetch();
+    }
+
 }
   

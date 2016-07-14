@@ -8,9 +8,9 @@
 
 namespace app\admin\controller;
 
-use library\verify\Desktop;
+use extend\verify\Admin;
 
-class Goods extends Desktop
+class Goods extends Admin
 {
     /**
      * 商品列表

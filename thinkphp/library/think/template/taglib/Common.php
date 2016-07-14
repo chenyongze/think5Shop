@@ -11,15 +11,16 @@ use think\template\TagLib;
  * @subpackage  Driver.Taglib
  * @author    liu21st <liu21st@gmail.com>
  */
-class Input extends Taglib
+class Common extends Taglib
 {
     // 标签定义
     protected $tags = [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
         'select' => ['attr' => 'rows, label, value, name, required, selected, class, callback', 'close' => 0, 'expression' => true],
         'region' => ['value, name, callback, required, label', 'close' => 0, 'expression' => true],
-        'image' => ['checked', 'close' => 0, 'expression' => true],
-        'imageArray' => ['checked', 'close' => 0, 'expression' => true],
+        'image' => ['attr' =>'name, value, checked', 'close' => 0, 'expression' => true],
+        'flashImage' => ['attr' => 'name, value, checked', 'close' => 0, 'expression' => true],
+        'imageArray' => ['value', 'close' => 0, 'expression' => true],
         'html' => ['checked', 'close' => 0, 'expression' => true],
     ];
 
@@ -44,7 +45,7 @@ class Input extends Taglib
                 }
                 $result[$tmp[0]] = $value;
             }
-            $inputContent = (new \library\help\Input())->init($method, $result);
+            $inputContent = (new \extend\help\Common())->init($method, $result);
             return $inputContent . $args[1];
         }
     }
